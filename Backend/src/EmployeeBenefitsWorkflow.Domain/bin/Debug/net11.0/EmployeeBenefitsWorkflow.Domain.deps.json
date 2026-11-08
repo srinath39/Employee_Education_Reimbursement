@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v11.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v11.0": {
+      "EmployeeBenefitsWorkflow.Domain/1.0.0": {
+        "runtime": {
+          "EmployeeBenefitsWorkflow.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "EmployeeBenefitsWorkflow.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

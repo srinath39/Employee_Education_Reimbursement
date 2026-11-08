@@ -1,0 +1,109 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v11.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v11.0": {
+      "EmployeeBenefitsWorkflow.Api/1.0.0": {
+        "dependencies": {
+          "EmployeeBenefitsWorkflow.Application": "1.0.0",
+          "EmployeeBenefitsWorkflow.Infrastructure": "1.0.0",
+          "Microsoft.AspNetCore.OpenApi": "11.0.0-rc.3.26522.148"
+        },
+        "runtime": {
+          "EmployeeBenefitsWorkflow.Api.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.OpenApi/11.0.0-rc.3.26522.148": {
+        "dependencies": {
+          "Microsoft.OpenApi": "3.10.2"
+        },
+        "runtime": {
+          "lib/net11.0/Microsoft.AspNetCore.OpenApi.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.52348",
+            "localPath": "Microsoft.AspNetCore.OpenApi.dll"
+          }
+        }
+      },
+      "Microsoft.OpenApi/3.10.2": {
+        "runtime": {
+          "lib/net8.0/Microsoft.OpenApi.dll": {
+            "assemblyVersion": "3.10.2.0",
+            "fileVersion": "3.10.2.0",
+            "localPath": "Microsoft.OpenApi.dll"
+          }
+        }
+      },
+      "EmployeeBenefitsWorkflow.Application/1.0.0": {
+        "dependencies": {
+          "EmployeeBenefitsWorkflow.Domain": "1.0.0"
+        },
+        "runtime": {
+          "EmployeeBenefitsWorkflow.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "EmployeeBenefitsWorkflow.Domain/1.0.0": {
+        "runtime": {
+          "EmployeeBenefitsWorkflow.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "EmployeeBenefitsWorkflow.Infrastructure/1.0.0": {
+        "dependencies": {
+          "EmployeeBenefitsWorkflow.Application": "1.0.0",
+          "EmployeeBenefitsWorkflow.Domain": "1.0.0"
+        },
+        "runtime": {
+          "EmployeeBenefitsWorkflow.Infrastructure.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "EmployeeBenefitsWorkflow.Api/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.AspNetCore.OpenApi/11.0.0-rc.3.26522.148": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5EoqFnsLPpZGN3V/1TngE2+nunsmUrb+jHWo7vfy40ydFYRQvEhb/rgmKrsWWL7DKLwNRHZJ/0AUWt5YUv+aKw==",
+      "path": "microsoft.aspnetcore.openapi/11.0.0-rc.3.26522.148",
+      "hashPath": "microsoft.aspnetcore.openapi.11.0.0-rc.3.26522.148.nupkg.sha512"
+    },
+    "Microsoft.OpenApi/3.10.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qzg4a3WmgQm28Azaporbnsu+KHA+vq5sgpQQFLiJgB06Rra2S+kzGAU7pzUB8/UIwZJCSCY2JEE/M5e0hQ2K8w==",
+      "path": "microsoft.openapi/3.10.2",
+      "hashPath": "microsoft.openapi.3.10.2.nupkg.sha512"
+    },
+    "EmployeeBenefitsWorkflow.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "EmployeeBenefitsWorkflow.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "EmployeeBenefitsWorkflow.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

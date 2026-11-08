@@ -1,0 +1,56 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v11.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v11.0": {
+      "EmployeeBenefitsWorkflow.Infrastructure/1.0.0": {
+        "dependencies": {
+          "EmployeeBenefitsWorkflow.Application": "1.0.0",
+          "EmployeeBenefitsWorkflow.Domain": "1.0.0"
+        },
+        "runtime": {
+          "EmployeeBenefitsWorkflow.Infrastructure.dll": {}
+        }
+      },
+      "EmployeeBenefitsWorkflow.Application/1.0.0": {
+        "dependencies": {
+          "EmployeeBenefitsWorkflow.Domain": "1.0.0"
+        },
+        "runtime": {
+          "EmployeeBenefitsWorkflow.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "EmployeeBenefitsWorkflow.Domain/1.0.0": {
+        "runtime": {
+          "EmployeeBenefitsWorkflow.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "EmployeeBenefitsWorkflow.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "EmployeeBenefitsWorkflow.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "EmployeeBenefitsWorkflow.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

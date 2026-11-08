@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/EmployeeBenefitsWorkflow.Api/EmployeeBenefitsWorkflow.Api.csproj" />
+    <Project Path="src/EmployeeBenefitsWorkflow.Application/EmployeeBenefitsWorkflow.Application.csproj" />
+    <Project Path="src/EmployeeBenefitsWorkflow.Domain/EmployeeBenefitsWorkflow.Domain.csproj" />
+    <Project Path="src/EmployeeBenefitsWorkflow.Infrastructure/EmployeeBenefitsWorkflow.Infrastructure.csproj" />
+  </Folder>
+</Solution>
