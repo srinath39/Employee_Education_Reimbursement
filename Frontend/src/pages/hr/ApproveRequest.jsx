@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import RequestDetailView from "../../components/requests/RequestDetailView";
 import RequestActions from "../../components/requests/RequestActions";
 import Loader from "../../components/common/Loader";
-import { getRequestById, updateRequestStatus } from "../../services/requestService";
+import { getRequestById, updateRequestWithDecision } from "../../services/requestService";
 import { PATHS, STATUS } from "../../utils/constants";
 
 export default function ApproveRequest() {
@@ -17,7 +17,7 @@ export default function ApproveRequest() {
   }, [id]);
 
   const handleDecision = async (status) => {
-    await updateRequestStatus(id, status);
+    await updateRequestWithDecision(id, status);
     navigate(PATHS.HR_PENDING);
   };
 

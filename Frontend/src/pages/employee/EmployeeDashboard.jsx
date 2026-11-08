@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
 import StatsGrid from "../../components/dashboard/StatsGrid";
 import Loader from "../../components/common/Loader";
-import useRequests from "../../hooks/useRequests";
-import { PATHS, STATUS } from "../../utils/constants";
+import useDashBoard from "../../hooks/useDashboard";
+import { PATHS, ROLES } from "../../utils/constants";
 
 export default function EmployeeDashboard() {
-  const { requests, loading } = useRequests("mine");
-  const count = (s) => requests.filter((r) => r.status === s).length;
+  const { statistics, loading, error, reloadStatistics } = useDashBoard({role: ROLES.EMPLOYEE});
 
   return (
     <>
@@ -21,17 +20,38 @@ export default function EmployeeDashboard() {
       </div>
       {loading ? (
         <Loader />
+      ) : error ? (
+        <>
+          <StatsGrid
+            stats={[
+              { label: "Total requests", value: "-" },
+              { label: "Pending", value: "-" },
+              { label: "Approved", value: "-" },
+              { label: "Rejected", value: "-" },
+            ]}
+          />
+          <div className="flex items-center gap-3" role="alert">
+            <p>Failed to load statistics. Please reload again.</p>
+            <button
+              className="rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700"
+              onClick={reloadStatistics}
+              type="button"
+            >
+              Reload statistics
+            </button>
+          </div>
+        </>
       ) : (
         <StatsGrid
           stats={[
-            { label: "Total requests", value: requests.length },
-            { label: "Pending", value: count(STATUS.PENDING) },
-            { label: "Approved", value: count(STATUS.APPROVED) },
-            { label: "Rejected", value: count(STATUS.REJECTED) },
+            { label: "Total requests", value: statistics?.totalEmployeeRequests ?? "-" },
+            { label: "Pending", value: statistics?.totalUnderReviewRequests ?? "-" },
+            { label: "Approved", value: statistics?.totalApprovedRequests ?? "-" },
+            { label: "Rejected", value: statistics?.totalRejectedRequests ?? "-" },
           ]}
         />
       )}
-      <Link to={PATHS.EMP_ALL}>View all requests →</Link>
+      {error ||  <Link to={PATHS.EMP_ALL}>View all requests →</Link>}
     </>
   );
 }

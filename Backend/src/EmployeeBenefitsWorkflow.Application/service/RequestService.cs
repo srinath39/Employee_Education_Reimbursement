@@ -16,6 +16,16 @@ public class RequestService : IReimbursmentRequestService
     {
         _reimbursementRequests = new List<ReimbursementRequest>();
         _requestDecisions = new List<RequestDecisions>();
+        loadRequests();
+    }
+
+    public void loadRequests()
+    {
+        _reimbursementRequests.Add(new ReimbursementRequest(0, null, "Azure", 3000.0, EnumRequestStatus.UNDER_REVIEW, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(0, null, "AWS", 4000.0, EnumRequestStatus.UNDER_REVIEW, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(0, null, "AI-901", 2000.0, EnumRequestStatus.APPROVED, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(0, null, "MERN", 3400.0, EnumRequestStatus.REJECTED, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(0, null, "Java", 2500.0, EnumRequestStatus.REJECTED, null));
     }
 
     public ResponseEmployeeStatistics GetEmployeeStatistics(int employeeId)
@@ -24,7 +34,7 @@ public class RequestService : IReimbursmentRequestService
         // total Under review requests
         // total rejected requests
         // total approved requests
-        List<ReimbursementRequest> totalEmpRequest = _reimbursementRequests.Where(request => request.Employee != null && request.Employee.Id == employeeId).ToList();
+        List<ReimbursementRequest> totalEmpRequest = _reimbursementRequests;
         int totalRequests = totalEmpRequest.Count;
         int totalUnderReviewRequests = totalEmpRequest.Count(request => request.RequestStatus == EnumRequestStatus.UNDER_REVIEW);
         int totalRejectedRequests = totalEmpRequest.Count(request => request.RequestStatus == EnumRequestStatus.REJECTED);

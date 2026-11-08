@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import useAuth from "./useAuth";
-import { getPendingRequests, getRequests } from "../services/requestService";
+import { getAllPendingRequests, getEmployeesAllRequests } from "../services/requestService";
 
 // scope: "mine" (employee's own / all for HR) | "pending" (HR queue)
 export default function useRequests(scope = "mine") {
@@ -13,7 +13,7 @@ export default function useRequests(scope = "mine") {
     setLoading(true);
     setError("");
     try {
-      setRequests(scope === "pending" ? await getPendingRequests() : await getRequests(user));
+      setRequests(scope === "pending" ? await getAllPendingRequests() : await getEmployeesAllRequests(user));
     } catch (e) {
       setError(e.message);
     } finally {

@@ -29,7 +29,7 @@ export default function Navbar({ menu }) {
       </nav>
       <div className="flex items-center gap-3">
         <span className="text-sm text-gray-700">
-          {user.name} ({user.role.toUpperCase()})
+          {user && user.name + user.role.toUpperCase()}
         </span>
         <button
           className="rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 font-medium text-gray-700 transition-colors hover:bg-gray-50"

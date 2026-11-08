@@ -21,7 +21,7 @@ export default function DashboardLayout() {
 
   return (
     <div className="min-h-screen">
-      <Navbar menu={MENU[user.role]} />
+      <Navbar menu={MENU[user?.role??ROLES.EMPLOYEE]} />
       <main className="mx-auto my-6 max-w-[960px] px-4">
         <Outlet />
       </main>
