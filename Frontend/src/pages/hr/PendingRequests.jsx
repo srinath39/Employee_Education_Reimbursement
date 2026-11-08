@@ -8,7 +8,7 @@ export default function PendingRequests() {
   return (
     <>
       <h2>Pending Requests</h2>
-      {error && <p className="error">{error}</p>}
+      {error && <p className="mb-3 text-sm text-red-600">{error}</p>}
       <RequestTable
         requests={requests}
         loading={loading}

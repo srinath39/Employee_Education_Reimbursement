@@ -24,7 +24,7 @@ export default function Login() {
       submitLabel="Login"
       onSubmit={handleSubmit}
       footer={
-        <p className="muted">
+        <p className="mt-4 text-sm text-gray-500">
           New here? <Link to={PATHS.REGISTER}>Register</Link>
         </p>
       }

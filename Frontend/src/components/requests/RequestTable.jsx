@@ -6,25 +6,29 @@ import Loader from "../common/Loader";
 // showEmployee: HR sees who raised the request
 export default function RequestTable({ requests, loading, basePath, showEmployee = false, emptyText }) {
   if (loading) return <Loader />;
-  if (!requests.length) return <p className="muted">{emptyText || "No requests found."}</p>;
+  if (!requests.length) return <p className="text-gray-500">{emptyText || "No requests found."}</p>;
+
+  const headerClass = "border-b border-gray-100 px-3 py-3 text-left font-semibold";
 
   return (
-    <table className="table">
-      <thead>
-        <tr>
-          {showEmployee && <th>Employee</th>}
-          <th>Title</th>
-          <th>Type</th>
-          <th>Date</th>
-          <th>Status</th>
-          <th />
-        </tr>
-      </thead>
-      <tbody>
-        {requests.map((r) => (
-          <RequestRow key={r.id} request={r} basePath={basePath} showEmployee={showEmployee} />
-        ))}
-      </tbody>
-    </table>
+    <div className="overflow-x-auto rounded-xl">
+      <table className="w-full border-collapse bg-white">
+        <thead>
+          <tr>
+            {showEmployee && <th className={headerClass}>Employee</th>}
+            <th className={headerClass}>Title</th>
+            <th className={headerClass}>Type</th>
+            <th className={headerClass}>Date</th>
+            <th className={headerClass}>Status</th>
+            <th className={headerClass} />
+          </tr>
+        </thead>
+        <tbody>
+          {requests.map((r) => (
+            <RequestRow key={r.id} request={r} basePath={basePath} showEmployee={showEmployee} />
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

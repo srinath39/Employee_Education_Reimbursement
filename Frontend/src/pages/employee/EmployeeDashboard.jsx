@@ -10,9 +10,12 @@ export default function EmployeeDashboard() {
 
   return (
     <>
-      <div className="page-head">
+      <div className="mb-2 flex items-center justify-between gap-4">
         <h2>Dashboard</h2>
-        <Link className="btn btn-primary" to={PATHS.EMP_NEW}>
+        <Link
+          className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 font-medium text-white transition-colors hover:bg-blue-700"
+          to={PATHS.EMP_NEW}
+        >
           + New Request
         </Link>
       </div>

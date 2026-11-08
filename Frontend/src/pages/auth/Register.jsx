@@ -33,7 +33,7 @@ export default function Register() {
       submitLabel="Create account"
       onSubmit={handleSubmit}
       footer={
-        <p className="muted">
+        <p className="mt-4 text-sm text-gray-500">
           Already registered? <Link to={PATHS.LOGIN}>Login</Link>
         </p>
       }

@@ -10,9 +10,12 @@ export default function HRDashboard() {
 
   return (
     <>
-      <div className="page-head">
+      <div className="mb-2 flex items-center justify-between gap-4">
         <h2>HR Dashboard</h2>
-        <Link className="btn btn-primary" to={PATHS.HR_PENDING}>
+        <Link
+          className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 font-medium text-white transition-colors hover:bg-blue-700"
+          to={PATHS.HR_PENDING}
+        >
           Pending Requests ({count(STATUS.PENDING)})
         </Link>
       </div>

@@ -21,7 +21,7 @@ export default function ApproveRequest() {
     navigate(PATHS.HR_PENDING);
   };
 
-  if (error) return <p className="error">{error}</p>;
+  if (error) return <p className="text-sm text-red-600">{error}</p>;
   if (!request) return <Loader />;
 
   return (

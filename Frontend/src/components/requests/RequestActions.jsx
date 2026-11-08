@@ -16,7 +16,7 @@ export default function RequestActions({ onDecision }) {
   };
 
   return (
-    <div className="actions">
+    <div className="mt-6 flex gap-3">
       <Button disabled={busy} onClick={() => decide(STATUS.APPROVED)}>
         Approve
       </Button>

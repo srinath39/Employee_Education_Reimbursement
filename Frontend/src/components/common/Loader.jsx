@@ -1,3 +1,3 @@
 export default function Loader() {
-  return <p className="muted">Loading...</p>;
+  return <p className="text-gray-500">Loading...</p>;
 }

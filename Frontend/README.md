@@ -13,6 +13,7 @@ Open http://localhost:5173, register as **Employee** or **HR**, and log in with 
 
 ## Notes
 
+- The UI is styled with Tailwind CSS.
 - `src/services/*Service.js` use a **localStorage mock** so the app works without a backend.
   To connect a real API, set `VITE_API_URL` (see `.env.example`) and swap the function bodies to use `src/services/api.js`.
 - Shared layouts/components:

@@ -20,9 +20,9 @@ export default function DashboardLayout() {
   const { user } = useAuth();
 
   return (
-    <div className="dash">
+    <div className="min-h-screen">
       <Navbar menu={MENU[user.role]} />
-      <main className="dash-content">
+      <main className="mx-auto my-6 max-w-[960px] px-4">
         <Outlet />
       </main>
     </div>

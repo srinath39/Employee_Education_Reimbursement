@@ -14,7 +14,7 @@ export default function RequestDetails() {
     getRequestById(id).then(setRequest).catch((e) => setError(e.message));
   }, [id]);
 
-  if (error) return <p className="error">{error}</p>;
+  if (error) return <p className="text-sm text-red-600">{error}</p>;
   if (!request) return <Loader />;
 
   return (

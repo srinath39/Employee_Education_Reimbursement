@@ -25,7 +25,10 @@ export default function RequestForm({ onSubmit }) {
   };
 
   return (
-    <form className="card" onSubmit={handleSubmit}>
+    <form
+      className="mt-3 rounded-xl bg-white p-6 shadow-[0_1px_4px_rgba(0,0,0,0.06)]"
+      onSubmit={handleSubmit}
+    >
       <Input label="Title" name="title" value={values.title} onChange={handleChange} required />
       <Input label="Type" name="type" type="select" options={TYPES} value={values.type} onChange={handleChange} />
       <Input
@@ -36,7 +39,7 @@ export default function RequestForm({ onSubmit }) {
         onChange={handleChange}
         required
       />
-      {error && <p className="error">{error}</p>}
+      {error && <p className="mb-3 text-sm text-red-600">{error}</p>}
       <Button type="submit" disabled={busy}>
         {busy ? "Submitting..." : "Submit request"}
       </Button>
