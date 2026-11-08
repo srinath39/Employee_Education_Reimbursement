@@ -14,7 +14,7 @@ public class User
 
     public User(int id, string name, EnumUserRoleType role, string email)
     {
-        if (id <= 0)
+        if (id < 0)
         {
             throw new InvalidDataException("Id is not valid");
         }

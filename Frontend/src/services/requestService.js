@@ -17,8 +17,9 @@ export async function getRequestById(id) {
   
 }
 
-export async function getHrStatistics(){
-
+export async function getHrStatistics() {
+  const response = await api.get("/hr/summary");
+  return response.data;
 }
 
 export async function getAllPendingRequests() {

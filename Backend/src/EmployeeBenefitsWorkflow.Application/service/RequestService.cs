@@ -17,15 +17,24 @@ public class RequestService : IReimbursmentRequestService
         _reimbursementRequests = new List<ReimbursementRequest>();
         _requestDecisions = new List<RequestDecisions>();
         loadRequests();
+        loadRequestsDecisions();
     }
 
     public void loadRequests()
     {
-        _reimbursementRequests.Add(new ReimbursementRequest(0, null, "Azure", 3000.0, EnumRequestStatus.UNDER_REVIEW, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(0, null, "AWS", 4000.0, EnumRequestStatus.UNDER_REVIEW, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(0, null, "AI-901", 2000.0, EnumRequestStatus.APPROVED, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(0, null, "MERN", 3400.0, EnumRequestStatus.REJECTED, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(0, null, "Java", 2500.0, EnumRequestStatus.REJECTED, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(0, new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), "Azure", 3000.0, EnumRequestStatus.UNDER_REVIEW, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(0, new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), "AWS", 4000.0, EnumRequestStatus.UNDER_REVIEW, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(0, new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), "AI-901", 2000.0, EnumRequestStatus.APPROVED, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(0, new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), "MERN", 3400.0, EnumRequestStatus.REJECTED, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(0, new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), "Java", 2500.0, EnumRequestStatus.REJECTED, null));
+    }
+
+    public void loadRequestsDecisions()
+    {
+        _requestDecisions.Add(new RequestDecisions(1,_reimbursementRequests[0],new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), EnumRequestStatus.UNDER_REVIEW));
+        _requestDecisions.Add(new RequestDecisions(2,_reimbursementRequests[1], new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), EnumRequestStatus.APPROVED));
+        _requestDecisions.Add(new RequestDecisions(3,_reimbursementRequests[2], new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), EnumRequestStatus.REJECTED));
+        _requestDecisions.Add(new RequestDecisions(4,_reimbursementRequests[3],new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), EnumRequestStatus.REJECTED));
     }
 
     public ResponseEmployeeStatistics GetEmployeeStatistics(int employeeId)
@@ -34,7 +43,7 @@ public class RequestService : IReimbursmentRequestService
         // total Under review requests
         // total rejected requests
         // total approved requests
-        List<ReimbursementRequest> totalEmpRequest = _reimbursementRequests;
+        List<ReimbursementRequest> totalEmpRequest = _reimbursementRequests.Where(request => request.Employee != null && request.Employee.Id == employeeId).ToList();
         int totalRequests = totalEmpRequest.Count;
         int totalUnderReviewRequests = totalEmpRequest.Count(request => request.RequestStatus == EnumRequestStatus.UNDER_REVIEW);
         int totalRejectedRequests = totalEmpRequest.Count(request => request.RequestStatus == EnumRequestStatus.REJECTED);
