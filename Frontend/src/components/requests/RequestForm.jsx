@@ -2,10 +2,8 @@ import { useState } from "react";
 import Input from "../common/Input";
 import Button from "../common/Button";
 
-const TYPES = ["Leave", "Equipment", "Reimbursement", "Other"].map((t) => ({ value: t, label: t }));
-
 export default function RequestForm({ onSubmit }) {
-  const [values, setValues] = useState({ title: "", type: TYPES[0].value, description: "" });
+  const [values, setValues] = useState({ courseName: "", claimAmount: ""});
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
@@ -29,13 +27,13 @@ export default function RequestForm({ onSubmit }) {
       className="mt-3 rounded-xl bg-white p-6 shadow-[0_1px_4px_rgba(0,0,0,0.06)]"
       onSubmit={handleSubmit}
     >
-      <Input label="Title" name="title" value={values.title} onChange={handleChange} required />
-      <Input label="Type" name="type" type="select" options={TYPES} value={values.type} onChange={handleChange} />
+      <Input label="CourseName" name="courseName" value={values.courseName} onChange={handleChange} required />
       <Input
-        label="Description"
-        name="description"
-        type="textarea"
-        value={values.description}
+        label="ClaimAmount"
+        name="claimAmount"
+        type="number"
+        step="any"
+        value={values.claimAmount}
         onChange={handleChange}
         required
       />

@@ -8,5 +8,9 @@ public class ResponseReimbursmentDto
 
     public double ClaimAmount {get;set;} 
 
-    public string RequestStatus {get;set;} =string.Empty; 
+    public string RequestStatus {get;set;} =string.Empty;
+
+    public int EmpId {get;set;} 
+
+    public string? EmployeeName {get;set;}
 }

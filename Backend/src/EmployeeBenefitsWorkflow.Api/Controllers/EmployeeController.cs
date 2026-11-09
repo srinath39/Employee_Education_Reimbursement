@@ -38,7 +38,7 @@ public class EmployeeController : Controller
     [HttpGet("{id:int}")]
     public IActionResult GetSpecificRequest(int id)
     {
-        return Ok();
+        return Ok(_service.GetRequestById(id));
     }
 
 }

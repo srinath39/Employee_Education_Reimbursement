@@ -6,13 +6,18 @@ export const STATUS = {
   REJECTED: "rejected",
 };
 
+export const REQUESTs = {
+  ALL_EMP_REQUESTS: "allEmployeeRequests",
+  ALL_HR_PENDING_REQUESTS: "allPendingRequests",
+};
+
 export const PATHS = {
   REGISTER: "/register",
   LOGIN: "/login",
 
   EMP_DASHBOARD: "/employee/dashboard",
   EMP_NEW: "/emp/req/new",
-  EMP_ALL: "/emp/reqs",
+  EMP_ALL: "/emp/req/all",
   EMP_DETAIL: (id = ":id") => `/emp/req/${id}`,
 
   HR_DASHBOARD: "/HR/dashboard",

@@ -16,16 +16,15 @@ export default function RequestTable({ requests, loading, basePath, showEmployee
         <thead>
           <tr>
             {showEmployee && <th className={headerClass}>Employee</th>}
-            <th className={headerClass}>Title</th>
-            <th className={headerClass}>Type</th>
-            <th className={headerClass}>Date</th>
+            <th className={headerClass}>Course Name</th>
+            <th className={headerClass}>Claim Amount</th>
             <th className={headerClass}>Status</th>
             <th className={headerClass} />
           </tr>
         </thead>
         <tbody>
           {requests.map((r) => (
-            <RequestRow key={r.id} request={r} basePath={basePath} showEmployee={showEmployee} />
+            <RequestRow key={r.requestId} request={r} basePath={basePath} showEmployee={showEmployee} />
           ))}
         </tbody>
       </table>

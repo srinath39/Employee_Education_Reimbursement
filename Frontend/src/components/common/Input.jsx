@@ -1,4 +1,3 @@
-// Handles text/email/textarea/select via the `type` prop.
 export default function Input({ label, name, type = "text", options = [], className = "", ...props }) {
   const controlClass = `w-full rounded-lg border border-gray-300 p-2.5 font-sans text-gray-800 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 ${className}`;
   let field;

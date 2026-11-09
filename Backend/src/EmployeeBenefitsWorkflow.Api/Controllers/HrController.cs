@@ -24,7 +24,7 @@ public class HrController : Controller
     [HttpGet("pendingRequests")]
     public IActionResult GetAllPendingRequests()
     {
-        return Ok();
+        return Ok(_service.GetAllPendingRequestOfHr());
     }
 
     [HttpPost("request/{id:int}/approve")]

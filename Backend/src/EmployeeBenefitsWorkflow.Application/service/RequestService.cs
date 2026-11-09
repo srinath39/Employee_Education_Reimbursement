@@ -22,19 +22,19 @@ public class RequestService : IReimbursmentRequestService
 
     public void loadRequests()
     {
-        _reimbursementRequests.Add(new ReimbursementRequest(0, new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), "Azure", 3000.0, EnumRequestStatus.UNDER_REVIEW, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(0, new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), "AWS", 4000.0, EnumRequestStatus.UNDER_REVIEW, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(0, new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), "AI-901", 2000.0, EnumRequestStatus.APPROVED, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(0, new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), "MERN", 3400.0, EnumRequestStatus.REJECTED, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(0, new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), "Java", 2500.0, EnumRequestStatus.REJECTED, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "Azure", 3000.0, EnumRequestStatus.UNDER_REVIEW, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "AWS", 4000.0, EnumRequestStatus.UNDER_REVIEW, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "AI-901", 2000.0, EnumRequestStatus.APPROVED, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "MERN", 3400.0, EnumRequestStatus.REJECTED, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "Java", 2500.0, EnumRequestStatus.REJECTED, null));
     }
 
     public void loadRequestsDecisions()
     {
-        _requestDecisions.Add(new RequestDecisions(1,_reimbursementRequests[0],new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), EnumRequestStatus.UNDER_REVIEW));
-        _requestDecisions.Add(new RequestDecisions(2,_reimbursementRequests[1], new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), EnumRequestStatus.APPROVED));
-        _requestDecisions.Add(new RequestDecisions(3,_reimbursementRequests[2], new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), EnumRequestStatus.REJECTED));
-        _requestDecisions.Add(new RequestDecisions(4,_reimbursementRequests[3],new User(0,"srinath",EnumUserRoleType.EMPLOYEE,"srinath@mail.com"), EnumRequestStatus.REJECTED));
+        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[0], new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.UNDER_REVIEW));
+        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[1], new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.APPROVED));
+        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[2], new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.REJECTED));
+        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[3], new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.REJECTED));
     }
 
     public ResponseEmployeeStatistics GetEmployeeStatistics(int employeeId)
@@ -129,7 +129,9 @@ public class RequestService : IReimbursmentRequestService
             RequestId = entityRequest.RequestId,
             ClaimAmount = entityRequest.ClaimAmount,
             CourseName = entityRequest.CourseName,
-            RequestStatus = entityRequest.RequestStatus.ToString()
+            RequestStatus = entityRequest.RequestStatus.ToString(),
+            EmpId = entityRequest.Employee?.Id ?? 0,
+            EmployeeName = entityRequest.Employee?.Name
         };
     }
 }
