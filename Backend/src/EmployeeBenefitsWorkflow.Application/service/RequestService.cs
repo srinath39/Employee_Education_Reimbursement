@@ -111,6 +111,11 @@ public class RequestService : IReimbursmentRequestService
         // HR id is required here 
         // steps :
         // current request with ID need to change status as APPROVE
+        var request=_reimbursementRequests.FirstOrDefault(request=>request.RequestId==requestId);
+        if(request is not null)
+        {
+            request.ApproveRequest();
+        }
         // A new RequestDecisions need to be created with request and HR details along with Decision
     }
 
@@ -119,6 +124,11 @@ public class RequestService : IReimbursmentRequestService
         // HR id is required here 
         // steps :
         // current request with ID need to change status as REJECTED
+        var request=_reimbursementRequests.FirstOrDefault(request=>request.RequestId==requestId);
+        if(request is not null)
+        {
+            request.RejectRequest();
+        }
         // A new RequestDecisions need to be created with request and HR details along with Decision
     }
 

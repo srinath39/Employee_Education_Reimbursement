@@ -1,4 +1,5 @@
 import api from "./api";
+import {STATUS_PATH} from "../utils/constants";
 
 export async function getEmployeeStatistics() {
   const response = await api.get("/eduReimburse/summary");
@@ -34,5 +35,6 @@ export async function getAllPendingRequests() {
 }
 
 export async function updateRequestWithDecision(id, status) {
-
+  const response = await api.post(`/hr/request/${id}/${STATUS_PATH[status]}`);
+  return response.data;
 }

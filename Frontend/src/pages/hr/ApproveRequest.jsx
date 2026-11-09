@@ -28,7 +28,7 @@ export default function ApproveRequest() {
     <>
       <Link to={PATHS.HR_PENDING}>← Back</Link>
       <RequestDetailView request={request}>
-        {request.status === STATUS.PENDING && <RequestActions onDecision={handleDecision} />}
+        {String(request.requestStatus).toLowerCase() === STATUS.PENDING && <RequestActions onDecision={handleDecision} />}
       </RequestDetailView>
     </>
   );

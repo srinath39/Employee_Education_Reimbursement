@@ -1,9 +1,15 @@
 export const ROLES = { EMPLOYEE: "employee", HR: "hr" };
 
 export const STATUS = {
-  PENDING: "pending",
+  PENDING: "under_review",
   APPROVED: "approved",
   REJECTED: "rejected",
+};
+
+export const STATUS_PATH={
+  under_review:"underReview",
+  approved:"approve",
+  rejected:"reject",
 };
 
 export const REQUESTs = {

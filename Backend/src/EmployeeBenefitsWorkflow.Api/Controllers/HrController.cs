@@ -30,12 +30,14 @@ public class HrController : Controller
     [HttpPost("request/{id:int}/approve")]
     public IActionResult ApproveRequest(int id)
     {
+        _service.ApproveRequest(id);
         return Ok();
     }
 
     [HttpPost("request/{id:int}/reject")]
     public IActionResult RejectRequest(int id)
     {
+        _service.RejectRequest(id);
         return Ok();
     }
 
