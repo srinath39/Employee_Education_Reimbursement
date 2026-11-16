@@ -1,24 +1,32 @@
 
+using System.ComponentModel.DataAnnotations;
 using EmployeeBenefitsWorkflow.Domain.Enums;
 
 namespace EmployeeBenefitsWorkflow.Domain.Entities;
 
 public class User
 {
-    public int Id { get; private set; }
-    public string? Name { get; private set; }
+    [Key]    // primary key in table 
+    public Guid Id { get; private set; }
 
-    public EnumUserRoleType Role { get; private set; }
+    [StringLength(100)]    // varchar(100) in table 
+    [Required]
+    public string Name { get; set; } =null!;
 
-    public string? Email { get; private set; }
+    [Required]
+    public EnumUserRoleType Role { get; set; }
 
-    public User(int id, string name, EnumUserRoleType role, string email)
+    [StringLength(100)]
+    [Required]
+    public string Email { get; set; } = null!;
+
+    public User()
     {
-        if (id < 0)
-        {
-            throw new InvalidDataException("Id is not valid");
-        }
+        
+    }
 
+    public User(string name, EnumUserRoleType role, string email)
+    {
         if (string.IsNullOrEmpty(name))
         {
             throw new InvalidDataException("Name is null or empty");
@@ -34,7 +42,7 @@ public class User
             throw new InvalidDataException("Email is null or empty");
         }
 
-        Id = Id;
+        Id = Guid.NewGuid();
         Name = name;
         Email = email;
         Role = role;

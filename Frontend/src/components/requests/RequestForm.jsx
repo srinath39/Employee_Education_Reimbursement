@@ -24,12 +24,12 @@ export default function RequestForm({ onSubmit }) {
 
   return (
     <form
-      className="mt-3 rounded-xl bg-white p-6 shadow-[0_1px_4px_rgba(0,0,0,0.06)]"
+      className="request-form mt-3"
       onSubmit={handleSubmit}
     >
-      <Input label="CourseName" name="courseName" value={values.courseName} onChange={handleChange} required />
+      <Input label="Course name" name="courseName" value={values.courseName} onChange={handleChange} required />
       <Input
-        label="ClaimAmount"
+        label="Claim amount"
         name="claimAmount"
         type="number"
         step="any"
@@ -37,7 +37,7 @@ export default function RequestForm({ onSubmit }) {
         onChange={handleChange}
         required
       />
-      {error && <p className="mb-3 text-sm text-red-600">{error}</p>}
+      {error && <p className="inline-error mb-3 text-sm" role="alert">{error}</p>}
       <Button type="submit" disabled={busy}>
         {busy ? "Submitting..." : "Submit request"}
       </Button>

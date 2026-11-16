@@ -18,7 +18,7 @@ public class HrController : Controller
     [HttpGet("summary")]
     public IActionResult GetSummary()
     {
-        return Ok(_service.GetHrStatistics(0));
+        return Ok(_service.GetHrStatistics(Guid.NewGuid()));
     }
 
     [HttpGet("pendingRequests")]

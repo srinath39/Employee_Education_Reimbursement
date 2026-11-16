@@ -10,7 +10,7 @@ public class ResponseReimbursmentDto
 
     public string RequestStatus {get;set;} =string.Empty;
 
-    public int EmpId {get;set;} 
+    public Guid EmpId {get;set;} 
 
     public string? EmployeeName {get;set;}
 }

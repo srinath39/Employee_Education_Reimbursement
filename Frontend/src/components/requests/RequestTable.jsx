@@ -8,18 +8,16 @@ export default function RequestTable({ requests, loading, basePath, showEmployee
   if (loading) return <Loader />;
   if (!requests.length) return <p className="text-gray-500">{emptyText || "No requests found."}</p>;
 
-  const headerClass = "border-b border-gray-100 px-3 py-3 text-left font-semibold";
-
   return (
-    <div className="overflow-x-auto rounded-xl">
-      <table className="w-full border-collapse bg-white">
+    <div className="table-shell">
+      <table className="request-table">
         <thead>
           <tr>
-            {showEmployee && <th className={headerClass}>Employee</th>}
-            <th className={headerClass}>Course Name</th>
-            <th className={headerClass}>Claim Amount</th>
-            <th className={headerClass}>Status</th>
-            <th className={headerClass} />
+            {showEmployee && <th>Employee</th>}
+            <th>Course Name</th>
+            <th>Claim Amount</th>
+            <th>Status</th>
+            <th><span className="sr-only">Actions</span></th>
           </tr>
         </thead>
         <tbody>

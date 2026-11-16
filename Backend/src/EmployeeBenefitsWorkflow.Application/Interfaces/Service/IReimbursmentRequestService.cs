@@ -5,16 +5,16 @@ namespace EmployeeBenefitsWorkflow.Application.interfaces.Service;
 
 public interface IReimbursmentRequestService
 {
-    public ResponseEmployeeStatistics GetEmployeeStatistics(int employeeId);
+    public ResponseEmployeeStatistics GetEmployeeStatistics(Guid employeeId);
 
-    public List<ResponseReimbursmentDto> GetAllRequestOfEmployee(int employeeId);
+    public List<ResponseReimbursmentDto> GetAllRequestOfEmployee(Guid employeeId);
 
     public ResponseReimbursmentDto GetRequestById(int RequestId);
 
     public ResponseReimbursmentDto CreateRequest(RequestReimbursmentDto requestDto);
 
 
-    public ResponseHrStatistics GetHrStatistics(int hrId);
+    public ResponseHrStatistics GetHrStatistics(Guid hrId);
 
     public List<ResponseReimbursmentDto> GetAllPendingRequestOfHr();
 

@@ -1,20 +1,31 @@
+using System.ComponentModel.DataAnnotations;
 using EmployeeBenefitsWorkflow.Domain.Enums;
 
 namespace EmployeeBenefitsWorkflow.Domain.Entities;
 
 public class RequestDecisions
 {
-    public int DecisionId { get; private set; }
+    [Key]
+    public Guid DecisionId { get; private set; }
 
-    public ReimbursementRequest Request { get; private set; }
+    [Required]
+    public Guid RequestId {get;private set;}
 
-    public User Hr { get; private set; } 
+    [Required]
+    public ReimbursementRequest Request { get; private set; } = null!;
 
+    [Required]
+    public Guid HrId {get;private set;}
+
+    [Required]
+    public User Hr { get; private set; } = null!;
+
+    [Required]
     public EnumRequestStatus RequestStatus { get; private set; } 
 
-    public RequestDecisions(int id, ReimbursementRequest request, User user, EnumRequestStatus status)
+    public RequestDecisions(ReimbursementRequest request, User user, EnumRequestStatus status)
     {
-        DecisionId = id;
+        DecisionId = Guid.NewGuid();
         Request = request;
         Hr = user;
         RequestStatus = status;

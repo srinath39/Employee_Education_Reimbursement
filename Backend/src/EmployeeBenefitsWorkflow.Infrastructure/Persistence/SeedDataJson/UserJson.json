@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "f3c7a1d2-4b5e-4c8a-9d2f-1a2b3c4d5e01",
+    "Name": "Srinath",
+    "Role": 0,
+    "Email": "srinath@example.com"
+  },
+  {
+    "Id": "f3c7a1d2-4b5e-4c8a-9d2f-1a2b3c4d5e02",
+    "Name": "Sathvika",
+    "Role": 0,
+    "Email": "sathvika@example.com"
+  },
+  {
+    "Id": "f3c7a1d2-4b5e-4c8a-9d2f-1a2b3c4d5e03",
+    "Name": "Meghana",
+    "Role": 1,
+    "Email": "meghana@example.com"
+  },
+  {
+    "Id": "f3c7a1d2-4b5e-4c8a-9d2f-1a2b3c4d5e04",
+    "Name": "Sathya",
+    "Role": 1,
+    "Email": "sathya@example.com"
+  }
+]

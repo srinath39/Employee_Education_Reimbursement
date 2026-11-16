@@ -32,7 +32,7 @@ export default function AuthForm({ title, fields, submitLabel, onSubmit, footer 
       {fields.map((f) => (
         <Input key={f.name} {...f} value={values[f.name]} onChange={handleChange} required />
       ))}
-      {error && <p className="mb-3 text-sm text-red-600">{error}</p>}
+      {error && <p className="inline-error mb-3 text-sm" role="alert">{error}</p>}
       <Button type="submit" disabled={busy}>
         {busy ? "Please wait..." : submitLabel}
       </Button>

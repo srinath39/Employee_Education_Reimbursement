@@ -9,6 +9,7 @@ public class RequestService : IReimbursmentRequestService
 {
     private readonly List<ReimbursementRequest> _reimbursementRequests;
     private readonly List<RequestDecisions> _requestDecisions;
+
     private int id;
     private int decisionId;
 
@@ -22,22 +23,22 @@ public class RequestService : IReimbursmentRequestService
 
     public void loadRequests()
     {
-        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "Azure", 3000.0, EnumRequestStatus.UNDER_REVIEW, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "AWS", 4000.0, EnumRequestStatus.UNDER_REVIEW, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "AI-901", 2000.0, EnumRequestStatus.APPROVED, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "MERN", 3400.0, EnumRequestStatus.REJECTED, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "Java", 2500.0, EnumRequestStatus.REJECTED, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "Azure", 3000.0, EnumRequestStatus.UNDER_REVIEW, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "AWS", 4000.0, EnumRequestStatus.UNDER_REVIEW, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "AI-901", 2000.0, EnumRequestStatus.APPROVED, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "MERN", 3400.0, EnumRequestStatus.REJECTED, null));
+        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "Java", 2500.0, EnumRequestStatus.REJECTED, null));
     }
 
     public void loadRequestsDecisions()
     {
-        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[0], new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.UNDER_REVIEW));
-        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[1], new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.APPROVED));
-        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[2], new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.REJECTED));
-        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[3], new User(0, "srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.REJECTED));
+        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[0], new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.UNDER_REVIEW));
+        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[1], new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.APPROVED));
+        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[2], new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.REJECTED));
+        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[3], new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.REJECTED));
     }
 
-    public ResponseEmployeeStatistics GetEmployeeStatistics(int employeeId)
+    public ResponseEmployeeStatistics GetEmployeeStatistics(Guid employeeId)
     {
         // total submitted requests
         // total Under review requests
@@ -65,7 +66,7 @@ public class RequestService : IReimbursmentRequestService
         return GetResponseRequestDtoFromRequestEntity(request);
     }
 
-    public List<ResponseReimbursmentDto> GetAllRequestOfEmployee(int employeeId)
+    public List<ResponseReimbursmentDto> GetAllRequestOfEmployee(Guid employeeId)
     {
         return _reimbursementRequests.Where(request => request.Employee != null && request.Employee.Id == employeeId).Select(request => GetResponseRequestDtoFromRequestEntity(request)).ToList();
     }
@@ -81,7 +82,7 @@ public class RequestService : IReimbursmentRequestService
     }
 
 
-    public ResponseHrStatistics GetHrStatistics(int hrId)
+    public ResponseHrStatistics GetHrStatistics(Guid hrId)
     {
         // total decisions done -> from request Decisions belongs to hrId
         List<RequestDecisions> empDecisions = _requestDecisions.Where(request => request.Hr.Id == hrId).ToList();
@@ -140,7 +141,7 @@ public class RequestService : IReimbursmentRequestService
             ClaimAmount = entityRequest.ClaimAmount,
             CourseName = entityRequest.CourseName,
             RequestStatus = entityRequest.RequestStatus.ToString(),
-            EmpId = entityRequest.Employee?.Id ?? 0,
+            EmpId = entityRequest.Employee.Id,
             EmployeeName = entityRequest.Employee?.Name
         };
     }

@@ -4,7 +4,7 @@ import StatusBadge from "./StatusBadge";
 // `children` renders below the details (e.g. <RequestActions /> for HR).
 export default function RequestDetailView({ request, children }) {
   return (
-    <div className="mt-3 rounded-xl bg-white p-6 shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+    <div className="request-details mt-3">
       <div className="flex items-center justify-between gap-4">
         <h2>Request Details</h2>
         <StatusBadge status={request.requestStatus} />

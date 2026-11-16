@@ -9,7 +9,7 @@ export default function EmployeeDashboard() {
 
   return (
     <>
-      <div className="mb-2 flex items-center justify-between gap-4">
+      <div className="page-title-row">
         <h2>Dashboard</h2>
         <Link
           className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 font-medium text-white transition-colors hover:bg-blue-700"
@@ -30,7 +30,7 @@ export default function EmployeeDashboard() {
               { label: "Rejected", value: "-" },
             ]}
           />
-          <div className="flex items-center gap-3" role="alert">
+          <div className="inline-error flex items-center gap-3" role="alert">
             <p>Failed to load statistics. Please reload again.</p>
             <button
               className="rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700"

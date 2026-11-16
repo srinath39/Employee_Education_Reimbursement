@@ -12,31 +12,37 @@ export default function Navbar({ menu }) {
   };
 
   return (
-    <header className="flex flex-wrap items-center gap-4 border-b border-gray-200 bg-white px-6 py-3 sm:gap-6">
-      <span className="text-xl font-bold">Request Portal</span>
-      <nav className="flex flex-1 flex-wrap gap-4">
-        {menu.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            className={({ isActive }) =>
-              isActive ? "font-bold text-blue-700" : "text-blue-600"
-            }
-          >
-            {item.label}
-          </NavLink>
-        ))}
-      </nav>
-      <div className="flex items-center gap-3">
-        <span className="text-sm text-gray-700">
-          {user && user.name + user.role.toUpperCase()}
+    <header className="site-header">
+      <div className="site-header-inner">
+        <span className="brand">
+          <span className="brand-mark" aria-hidden="true">ER</span>
+          Education Reimbursement
         </span>
-        <button
-          className="rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 font-medium text-gray-700 transition-colors hover:bg-gray-50"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
+        <nav className="primary-nav" aria-label="Main navigation">
+          {menu.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) =>
+                isActive ? "nav-link nav-link-active" : "nav-link"
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+        <div className="account-actions">
+          <div className="account-meta">
+            <span className="account-name">{user?.name}</span>
+            <span className="role-pill">{user?.role}</span>
+          </div>
+          <button
+            className="logout-button rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 font-medium text-gray-700 transition-colors hover:bg-gray-50"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </div>
       </div>
     </header>
   );

@@ -1,36 +1,54 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using EmployeeBenefitsWorkflow.Domain.Enums;
 
 namespace EmployeeBenefitsWorkflow.Domain.Entities;
 
 public class ReimbursementRequest
 {
-    public int RequestId { get; private set; }
+    [Key]
+    public Guid RequestId { get; private set; }
 
-    public User? Employee { get; private set; }
+    [Required]
+    public Guid EmployeeId { get; private set; }
 
-    public string? CourseName { get; private set; }
+    [Required]
+    public User Employee { get; private set; } = null!;   // navigation property usually this is not stored in database, but its id Employee Id is stored as a foreign key 
+                                                            // this is useful for direct access 
 
-    public double ClaimAmount { get; private set; }
+    [Required]
+    [StringLength(100)]
+    public string CourseName { get; private set; } = null!;
 
-    public EnumRequestStatus RequestStatus { get; private set; } = EnumRequestStatus.UNDER_REVIEW;
+    [Required]
+    [Column(TypeName = "decimal(18,2)")]
+    public decimal ClaimAmount { get; private set; }
 
-    public List<RequestDocuments>? RequestDocuments { get; private set; }
+    [Required]
+    public EnumRequestStatus RequestStatus { get; private set; }
 
-    public ReimbursementRequest(int id, string courseName,double claimAmount)
+
+    // public List<RequestDocuments>? RequestDocuments { get; private set; }
+
+    public ReimbursementRequest()
     {
-        RequestId=id;
-        CourseName=courseName;
-        ClaimAmount=claimAmount;
     }
 
-    public ReimbursementRequest(int id, User employee, string courseName, double claimAmount, EnumRequestStatus status, List<RequestDocuments> requestDocuments)
+
+    public ReimbursementRequest(string courseName, decimal claimAmount)
     {
-        RequestId = id;
+        RequestId = Guid.NewGuid();
+        CourseName = courseName;
+        ClaimAmount = claimAmount;
+    }
+
+    public ReimbursementRequest(User employee, string courseName, decimal claimAmount, EnumRequestStatus status)
+    {
+        RequestId = Guid.NewGuid();
         Employee = employee;
         CourseName = courseName;
         ClaimAmount = claimAmount;
         RequestStatus = status;
-        RequestDocuments = requestDocuments;
     }
 
     public void ApproveRequest()
