@@ -10,7 +10,7 @@ public class ReimbursementRequest
     public Guid RequestId { get; private set; }
 
     [Required]
-    public Guid EmployeeId { get; private set; }
+    public Guid EmployeeId { get; private set; }    // Foreign key , automatically recognised by EF Core 
 
     [Required]
     public User Employee { get; private set; } = null!;   // navigation property usually this is not stored in database, but its id Employee Id is stored as a foreign key 

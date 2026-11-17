@@ -10,6 +10,8 @@ public class RequestService : IReimbursmentRequestService
     private readonly List<ReimbursementRequest> _reimbursementRequests;
     private readonly List<RequestDecisions> _requestDecisions;
 
+    private readonly 
+
     private int id;
     private int decisionId;
 
@@ -19,23 +21,6 @@ public class RequestService : IReimbursmentRequestService
         _requestDecisions = new List<RequestDecisions>();
         loadRequests();
         loadRequestsDecisions();
-    }
-
-    public void loadRequests()
-    {
-        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "Azure", 3000.0, EnumRequestStatus.UNDER_REVIEW, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "AWS", 4000.0, EnumRequestStatus.UNDER_REVIEW, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "AI-901", 2000.0, EnumRequestStatus.APPROVED, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "MERN", 3400.0, EnumRequestStatus.REJECTED, null));
-        _reimbursementRequests.Add(new ReimbursementRequest(id++, new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), "Java", 2500.0, EnumRequestStatus.REJECTED, null));
-    }
-
-    public void loadRequestsDecisions()
-    {
-        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[0], new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.UNDER_REVIEW));
-        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[1], new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.APPROVED));
-        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[2], new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.REJECTED));
-        _requestDecisions.Add(new RequestDecisions(decisionId++, _reimbursementRequests[3], new User("srinath", EnumUserRoleType.EMPLOYEE, "srinath@mail.com"), EnumRequestStatus.REJECTED));
     }
 
     public ResponseEmployeeStatistics GetEmployeeStatistics(Guid employeeId)

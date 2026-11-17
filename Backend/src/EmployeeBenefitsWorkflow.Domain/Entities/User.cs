@@ -20,6 +20,8 @@ public class User
     [Required]
     public string Email { get; set; } = null!;
 
+    public List<ReimbursementRequest> EmployeeRequests {get;private set};
+
     public User()
     {
         
