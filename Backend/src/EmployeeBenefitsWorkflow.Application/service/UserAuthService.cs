@@ -1,10 +1,18 @@
 namespace EmployeeBenefitsWorkflow.Application.service;
 
 using EmployeeBenefitsWorkflow.Application.DTOs;
+using EmployeeBenefitsWorkflow.Application.interfaces.Repository;
 using EmployeeBenefitsWorkflow.Application.interfaces.Service;
 
 public class UserAuthService : IAuthService
 {
+    private readonly IUserRepository _userRepository;
+
+    public UserAuthService(IUserRepository userRepository)
+    {
+        _userRepository=userRepository;
+    }
+    
     public ResponseUserDto UserLogin(RequestUserDto userDto)
     {
         // login logic 
@@ -16,4 +24,7 @@ public class UserAuthService : IAuthService
         // login logic 
         return new ResponseUserDto();
     }
+
+
+
 }

@@ -26,31 +26,31 @@ public class EmployeeController : Controller
     }
 
     [HttpPost("")]
-    public IActionResult CreateRequest(RequestReimbursmentDto request)
+    public IActionResult CreateRequest([FromHeader(Name ="UserId")] Guid empId,RequestReimbursmentDto request)
     {
-        return Ok(_service.CreateRequest(request));
+        return Ok(_service.CreateRequest(empId,request));
 
     }
 
     [HttpGet("mine")]
-    public IActionResult GetAllRequest()
+    public IActionResult GetAllRequest([FromHeader(Name ="UserId")] Guid empId)
     {
-        return Ok(_service.GetAllRequestOfEmployee(Guid.NewGuid()));
+        return Ok(_service.GetAllRequestOfEmployee(empId));
     }
 
     [HttpGet("summary")]
-    public IActionResult GetSummary()
+    public IActionResult GetSummary([FromHeader(Name ="UserId")] Guid empId)
     {
-        // int id=employee id from cookies/tokens 
-        return Ok(_service.GetEmployeeStatistics(Guid.NewGuid()));
+        return Ok(_service.GetEmployeeStatistics(empId));
     }
 
-    [HttpGet("{id:int}")]
-    public IActionResult GetSpecificRequest(int id)
+    [HttpGet("{id:guid}")]
+    public IActionResult GetSpecificRequest(Guid id)
     {
         return Ok(_service.GetRequestById(id));
     }
 
+    // testing purpose 
     [HttpGet("env")]
     public IActionResult GetEnvironmentDetails()
     {

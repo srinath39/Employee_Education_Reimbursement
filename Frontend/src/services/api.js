@@ -4,10 +4,12 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
 });
 
-// api.interceptors.request.use((config) => {
-//   const token = localStorage.getItem("token");
-//   if (token) config.headers.Authorization = `Bearer ${token}`;
-//   return config;
-// });
+export const setApiUserId = (userId) => {
+  if (userId) {
+    api.defaults.headers.common["UserId"] = userId;
+  } else {
+    delete api.defaults.headers.common["UserId"];
+  }
+};
 
 export default api;

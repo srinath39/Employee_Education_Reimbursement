@@ -6,26 +6,29 @@ namespace EmployeeBenefitsWorkflow.Domain.Entities;
 public class RequestDecisions
 {
     [Key]
-    public Guid DecisionId { get; private set; }
+    public Guid DecisionId { get;  set; }
 
     [Required]
-    public Guid RequestId {get;private set;}
+    public Guid RequestId { get;  set; }
 
     [Required]
-    public ReimbursementRequest Request { get; private set; } = null!;
+    public ReimbursementRequest Request { get;  set; } = null!;
 
     [Required]
-    public Guid HrId {get;private set;}
+    public Guid HrId { get;  set; }
 
     [Required]
-    public User Hr { get; private set; } = null!;
+    public User Hr { get;  set; } = null!;
 
     [Required]
-    public EnumRequestStatus RequestStatus { get; private set; } 
+    public EnumRequestStatus RequestStatus { get;  set; }
+
+    public RequestDecisions()
+    {
+    }
 
     public RequestDecisions(ReimbursementRequest request, User user, EnumRequestStatus status)
     {
-        DecisionId = Guid.NewGuid();
         Request = request;
         Hr = user;
         RequestStatus = status;

@@ -1,34 +1,21 @@
-import { createContext, useCallback, useMemo, useState } from "react";
+import { createContext, useCallback, useMemo, useState ,useEffect} from "react";
 import * as authService from "../services/authService";
+import {setApiUserId} from '../services/api';
 
 export const AuthContext = createContext(null);
 
-const getStoredUser = () => {
-  try {
-    return JSON.parse(localStorage.getItem("user"));
-  } catch {
-    return null;
-  }
-};
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(getStoredUser);
+  const [user, setUser] = useState(null);
 
-  const persist = (u) => {
-    localStorage.setItem("user", JSON.stringify(u));
-    setUser(u);
-    return u;
-  };
-
-  const login = useCallback(async (data) => persist(await authService.login(data)), []);
+  const login = useCallback(async (data) => setUser(await authService.login(data)), []);
 
   const register = useCallback(async (data) => {
     const created = await authService.register(data);
-    return persist(created);
+    return setUser(created);
   }, []);
 
   const logout = useCallback(() => {
-    localStorage.removeItem("user");
     setUser(null);
   }, []);
 
@@ -36,6 +23,10 @@ export function AuthProvider({ children }) {
     () => ({ user, role: user?.role, login, register, logout }),
     [user, login, register, logout]
   );
+
+  useEffect(() => {
+    setApiUserId(user?.userId ?? null);
+  }, [user?.userId]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

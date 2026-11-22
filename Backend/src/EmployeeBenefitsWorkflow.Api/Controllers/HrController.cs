@@ -12,13 +12,13 @@ public class HrController : Controller
 
     public HrController(IReimbursmentRequestService service)
     {
-        _service=service;
+        _service = service;
     }
 
     [HttpGet("summary")]
-    public IActionResult GetSummary()
+    public IActionResult GetSummary([FromHeader(Name = "UserId")] Guid hrId)
     {
-        return Ok(_service.GetHrStatistics(Guid.NewGuid()));
+        return Ok(_service.GetHrStatistics(hrId));
     }
 
     [HttpGet("pendingRequests")]
@@ -27,17 +27,17 @@ public class HrController : Controller
         return Ok(_service.GetAllPendingRequestOfHr());
     }
 
-    [HttpPost("request/{id:int}/approve")]
-    public IActionResult ApproveRequest(int id)
+    [HttpPost("request/{requestId:guid}/approve")]
+    public IActionResult ApproveRequest([FromHeader(Name = "UserId")] Guid hrId, Guid requestId)
     {
-        _service.ApproveRequest(id);
+        _service.ApproveRequest(hrId, requestId);
         return Ok();
     }
 
-    [HttpPost("request/{id:int}/reject")]
-    public IActionResult RejectRequest(int id)
+    [HttpPost("request/{requestId:guid}/reject")]
+    public IActionResult RejectRequest([FromHeader(Name = "UserId")] Guid hrId, Guid requestId)
     {
-        _service.RejectRequest(id);
+        _service.RejectRequest(hrId, requestId);
         return Ok();
     }
 

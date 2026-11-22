@@ -1,26 +1,23 @@
 namespace EmployeeBenefitsWorkflow.Application.service;
 
 using EmployeeBenefitsWorkflow.Application.DTOs;
+using EmployeeBenefitsWorkflow.Application.interfaces.Repository;
 using EmployeeBenefitsWorkflow.Application.interfaces.Service;
 using EmployeeBenefitsWorkflow.Domain.Entities;
 using EmployeeBenefitsWorkflow.Domain.Enums;
 
 public class RequestService : IReimbursmentRequestService
 {
-    private readonly List<ReimbursementRequest> _reimbursementRequests;
-    private readonly List<RequestDecisions> _requestDecisions;
+    private readonly IRequestRepository _requestRepository;
 
-    private readonly 
+    private readonly IRequestDecisionRepository _requestDecisionRepository;
+    private readonly IUserRepository _userRepository;
 
-    private int id;
-    private int decisionId;
-
-    public RequestService()
+    public RequestService(IRequestRepository requestRepository, IRequestDecisionRepository requestDecisionRepository, IUserRepository userRepository)
     {
-        _reimbursementRequests = new List<ReimbursementRequest>();
-        _requestDecisions = new List<RequestDecisions>();
-        loadRequests();
-        loadRequestsDecisions();
+        _requestRepository = requestRepository;
+        _requestDecisionRepository = requestDecisionRepository;
+        _userRepository = userRepository;
     }
 
     public ResponseEmployeeStatistics GetEmployeeStatistics(Guid employeeId)
@@ -29,7 +26,7 @@ public class RequestService : IReimbursmentRequestService
         // total Under review requests
         // total rejected requests
         // total approved requests
-        List<ReimbursementRequest> totalEmpRequest = _reimbursementRequests.Where(request => request.Employee != null && request.Employee.Id == employeeId).ToList();
+        List<ReimbursementRequest> totalEmpRequest = _requestRepository.GetAllRequestByEmployeeId(employeeId).Where(request => request != null).ToList();
         int totalRequests = totalEmpRequest.Count;
         int totalUnderReviewRequests = totalEmpRequest.Count(request => request.RequestStatus == EnumRequestStatus.UNDER_REVIEW);
         int totalRejectedRequests = totalEmpRequest.Count(request => request.RequestStatus == EnumRequestStatus.REJECTED);
@@ -43,22 +40,23 @@ public class RequestService : IReimbursmentRequestService
         };
     }
 
-    public ResponseReimbursmentDto CreateRequest(RequestReimbursmentDto requestDto)
+    public ResponseReimbursmentDto CreateRequest(Guid empId, RequestReimbursmentDto requestDto)
     {
         // user as employee id is required here 
-        ReimbursementRequest request = new ReimbursementRequest(id++, requestDto.CourseName, requestDto.ClaimAmount);
-        _reimbursementRequests.Add(request);
-        return GetResponseRequestDtoFromRequestEntity(request);
+        User emp = _userRepository.GetUserByUserId(empId);
+        ReimbursementRequest request = new ReimbursementRequest(emp, requestDto.CourseName, requestDto.ClaimAmount);
+        Guid requestId = _requestRepository.CreateRequest(request);
+        return GetResponseRequestDtoFromRequestEntity(_requestRepository.GetRequestByRequestId(requestId));
     }
 
     public List<ResponseReimbursmentDto> GetAllRequestOfEmployee(Guid employeeId)
     {
-        return _reimbursementRequests.Where(request => request.Employee != null && request.Employee.Id == employeeId).Select(request => GetResponseRequestDtoFromRequestEntity(request)).ToList();
+        return _requestRepository.GetAllRequestByEmployeeId(employeeId).Where(request => request != null).Select(request => GetResponseRequestDtoFromRequestEntity(request)).ToList();
     }
 
-    public ResponseReimbursmentDto GetRequestById(int RequestId)  // shared accross both HR and Employee 
+    public ResponseReimbursmentDto GetRequestById(Guid requestId)  // shared accross both HR and Employee 
     {
-        ReimbursementRequest? req = _reimbursementRequests.FirstOrDefault(request => request.RequestId == RequestId);
+        ReimbursementRequest? req = _requestRepository.GetRequestByRequestId(requestId);
         if (req is null)
         {
             throw new KeyNotFoundException("Request not found");
@@ -70,14 +68,14 @@ public class RequestService : IReimbursmentRequestService
     public ResponseHrStatistics GetHrStatistics(Guid hrId)
     {
         // total decisions done -> from request Decisions belongs to hrId
-        List<RequestDecisions> empDecisions = _requestDecisions.Where(request => request.Hr.Id == hrId).ToList();
+        List<RequestDecisions> empDecisions = _requestDecisionRepository.GetRequestDecisionByHrId(hrId).Where(requestDecision => requestDecision != null).ToList();
         int totalDecisionsGiven = empDecisions.Count;
         // total approved decisions
         int totalApprovedDecisions = empDecisions.Count(request => request.RequestStatus == EnumRequestStatus.APPROVED);
         // total Rejected decisions
         int totalRejectedDecisions = empDecisions.Count(request => request.RequestStatus == EnumRequestStatus.REJECTED);
         // total pending request  -> among all request which request as underreview status
-        int totalPendingRequests = _reimbursementRequests.Count(request => request.RequestStatus == EnumRequestStatus.UNDER_REVIEW);
+        int totalPendingRequests = _requestRepository.GetAllRequestByRequestStatus(EnumRequestStatus.UNDER_REVIEW).Where(request => request != null).ToList().Count;
         return new ResponseHrStatistics()
         {
             TotalDecisionsGiven = totalDecisionsGiven,
@@ -89,33 +87,45 @@ public class RequestService : IReimbursmentRequestService
 
     public List<ResponseReimbursmentDto> GetAllPendingRequestOfHr()  // same for all HR's 
     {
-        return _reimbursementRequests.Where(request => request.RequestStatus == EnumRequestStatus.UNDER_REVIEW).ToList().Select(request => GetResponseRequestDtoFromRequestEntity(request)).ToList();
+        return _requestRepository.GetAllRequestByRequestStatus(EnumRequestStatus.UNDER_REVIEW).Where(request => request != null).Select(request => GetResponseRequestDtoFromRequestEntity(request)).ToList();
     }
 
-    public void ApproveRequest(int requestId)
+    public void ApproveRequest(Guid hrId, Guid requestId)
     {
         // HR id is required here 
+        User hr = _userRepository.GetUserByUserId(hrId);
         // steps :
         // current request with ID need to change status as APPROVE
-        var request=_reimbursementRequests.FirstOrDefault(request=>request.RequestId==requestId);
-        if(request is not null)
+        ReimbursementRequest request = _requestRepository.GetRequestByRequestId(requestId);
+        if (request is null)
         {
-            request.ApproveRequest();
+            throw new NullReferenceException("Request is null");
         }
+        request.ApproveRequest();
+        _requestRepository.SaveRequestChanges();
         // A new RequestDecisions need to be created with request and HR details along with Decision
+        var requestDecision = new RequestDecisions(request, hr, request.RequestStatus);
+        _requestDecisionRepository.CreateRequestDecision(requestDecision);
+        _requestDecisionRepository.SaveRequestDecisionsChanges();
     }
 
-    public void RejectRequest(int requestId)
+    public void RejectRequest(Guid hrId, Guid requestId)
     {
         // HR id is required here 
+        User hr = _userRepository.GetUserByUserId(hrId);
         // steps :
         // current request with ID need to change status as REJECTED
-        var request=_reimbursementRequests.FirstOrDefault(request=>request.RequestId==requestId);
-        if(request is not null)
+        ReimbursementRequest request = _requestRepository.GetRequestByRequestId(requestId);
+        if (request is null)
         {
-            request.RejectRequest();
+            throw new NullReferenceException("Request is null");
         }
+        request.RejectRequest();
+        _requestRepository.SaveRequestChanges();
         // A new RequestDecisions need to be created with request and HR details along with Decision
+        var requestDecision = new RequestDecisions(request, hr, request.RequestStatus);
+        _requestDecisionRepository.CreateRequestDecision(requestDecision);
+        _requestDecisionRepository.SaveRequestDecisionsChanges();
     }
 
     private ResponseReimbursmentDto GetResponseRequestDtoFromRequestEntity(ReimbursementRequest entityRequest)
@@ -126,7 +136,7 @@ public class RequestService : IReimbursmentRequestService
             ClaimAmount = entityRequest.ClaimAmount,
             CourseName = entityRequest.CourseName,
             RequestStatus = entityRequest.RequestStatus.ToString(),
-            EmpId = entityRequest.Employee.Id,
+            EmpId = entityRequest.EmployeeId,
             EmployeeName = entityRequest.Employee?.Name
         };
     }

@@ -2,6 +2,8 @@ using EmployeeBenefitsWorkflow.Application.interfaces.Service;
 using EmployeeBenefitsWorkflow.Application.service;
 using Microsoft.EntityFrameworkCore;
 using EmployeeBenefitsWorkflow.Infrastructure.Persistence;
+using EmployeeBenefitsWorkflow.Application.interfaces.Repository;
+using EmployeeBenefitsWorkflow.Infrastructure.Persistence.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +31,15 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>   // dependency i
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddSingleton<IReimbursmentRequestService, RequestService>();
+builder.Services.AddScoped<IReimbursmentRequestService, RequestService>();
+builder.Services.AddScoped<IAuthService, UserAuthService>();
+
+
+builder.Services.AddScoped<IRequestDecisionRepository, RequestDecisionRepository>();
+builder.Services.AddScoped<IRequestRepository, RequestRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+
 
 var app = builder.Build();
 

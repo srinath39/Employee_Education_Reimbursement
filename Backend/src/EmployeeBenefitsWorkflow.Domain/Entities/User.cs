@@ -7,20 +7,20 @@ namespace EmployeeBenefitsWorkflow.Domain.Entities;
 public class User
 {
     [Key]    // primary key in table 
-    public Guid Id { get; private set; }
+    public Guid Id { get; set; }
 
     [StringLength(100)]    // varchar(100) in table 
     [Required]
-    public string Name { get; set; } =null!;
+    public string Name { get;  set; } =null!;
 
     [Required]
-    public EnumUserRoleType Role { get; set; }
+    public EnumUserRoleType Role { get;  set; }
 
     [StringLength(100)]
     [Required]
-    public string Email { get; set; } = null!;
+    public string Email { get;  set; } = null!;
 
-    public List<ReimbursementRequest> EmployeeRequests {get;private set};
+    public List<ReimbursementRequest> EmployeeRequests {get; set;} =new();
 
     public User()
     {
@@ -43,8 +43,6 @@ public class User
         {
             throw new InvalidDataException("Email is null or empty");
         }
-
-        Id = Guid.NewGuid();
         Name = name;
         Email = email;
         Role = role;

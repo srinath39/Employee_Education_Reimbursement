@@ -9,16 +9,16 @@ public interface IReimbursmentRequestService
 
     public List<ResponseReimbursmentDto> GetAllRequestOfEmployee(Guid employeeId);
 
-    public ResponseReimbursmentDto GetRequestById(int RequestId);
+    public ResponseReimbursmentDto GetRequestById(Guid RequestId);
 
-    public ResponseReimbursmentDto CreateRequest(RequestReimbursmentDto requestDto);
+    public ResponseReimbursmentDto CreateRequest(Guid empId, RequestReimbursmentDto requestDto);
 
 
     public ResponseHrStatistics GetHrStatistics(Guid hrId);
 
     public List<ResponseReimbursmentDto> GetAllPendingRequestOfHr();
 
-    public void ApproveRequest(int RequestId);
+    public void ApproveRequest(Guid hrId, Guid RequestId);
 
-    public void RejectRequest(int RequestId);
-}   
+    public void RejectRequest(Guid hrId, Guid RequestId);
+}

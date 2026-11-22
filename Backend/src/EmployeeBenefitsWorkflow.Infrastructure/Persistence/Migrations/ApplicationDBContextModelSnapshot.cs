@@ -15,7 +15,7 @@ partial class ApplicationDBContextModelSnapshot : ModelSnapshot
     // If you encounter a merge conflict in the line below, it means you need to
     // discard one of the migration branches and recreate its migrations on top of
     // the other branch. See https://aka.ms/efcore-docs-migrations-conflicts for more info.
-    public override string LastMigrationId => "20261116081329_InitialCreate";
+    public override string LastMigrationId => "20261117185336_seed_data_into_users";
 
     protected override void BuildModel(ModelBuilder modelBuilder)
     {
@@ -24,6 +24,58 @@ partial class ApplicationDBContextModelSnapshot : ModelSnapshot
             .HasAnnotation("ProductVersion", "11.0.0")
             .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+        modelBuilder.Entity("EmployeeBenefitsWorkflow.Domain.Entities.ReimbursementRequest", b =>
+            {
+                b.Property<Guid>("RequestId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("char(36)");
+
+                b.Property<decimal>("ClaimAmount")
+                    .HasColumnType("decimal(18,2)");
+
+                b.Property<string>("CourseName")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnType("varchar(100)");
+
+                b.Property<Guid>("EmployeeId")
+                    .HasColumnType("char(36)");
+
+                b.Property<int>("RequestStatus")
+                    .HasColumnType("int");
+
+                b.HasKey("RequestId");
+
+                b.HasIndex("EmployeeId");
+
+                b.ToTable("ReimbursementRequests");
+            });
+
+        modelBuilder.Entity("EmployeeBenefitsWorkflow.Domain.Entities.RequestDecisions", b =>
+            {
+                b.Property<Guid>("DecisionId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("char(36)");
+
+                b.Property<Guid>("HrId")
+                    .HasColumnType("char(36)");
+
+                b.Property<Guid>("RequestId")
+                    .HasColumnType("char(36)");
+
+                b.Property<int>("RequestStatus")
+                    .HasColumnType("int");
+
+                b.HasKey("DecisionId");
+
+                b.HasIndex("HrId");
+
+                b.HasIndex("RequestId")
+                    .IsUnique();
+
+                b.ToTable("RequestDecisions");
+            });
+
         modelBuilder.Entity("EmployeeBenefitsWorkflow.Domain.Entities.User", b =>
             {
                 b.Property<Guid>("Id")
@@ -31,10 +83,12 @@ partial class ApplicationDBContextModelSnapshot : ModelSnapshot
                     .HasColumnType("char(36)");
 
                 b.Property<string>("Email")
+                    .IsRequired()
                     .HasMaxLength(100)
                     .HasColumnType("varchar(100)");
 
                 b.Property<string>("Name")
+                    .IsRequired()
                     .HasMaxLength(100)
                     .HasColumnType("varchar(100)");
 
@@ -74,6 +128,41 @@ partial class ApplicationDBContextModelSnapshot : ModelSnapshot
                         Name = "Sathya",
                         Role = 1
                     });
+            });
+
+        modelBuilder.Entity("EmployeeBenefitsWorkflow.Domain.Entities.ReimbursementRequest", b =>
+            {
+                b.HasOne("EmployeeBenefitsWorkflow.Domain.Entities.User", "Employee")
+                    .WithMany("EmployeeRequests")
+                    .HasForeignKey("EmployeeId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+
+                b.Navigation("Employee");
+            });
+
+        modelBuilder.Entity("EmployeeBenefitsWorkflow.Domain.Entities.RequestDecisions", b =>
+            {
+                b.HasOne("EmployeeBenefitsWorkflow.Domain.Entities.User", "Hr")
+                    .WithMany()
+                    .HasForeignKey("HrId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+
+                b.HasOne("EmployeeBenefitsWorkflow.Domain.Entities.ReimbursementRequest", "Request")
+                    .WithOne()
+                    .HasForeignKey("EmployeeBenefitsWorkflow.Domain.Entities.RequestDecisions", "RequestId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+
+                b.Navigation("Hr");
+
+                b.Navigation("Request");
+            });
+
+        modelBuilder.Entity("EmployeeBenefitsWorkflow.Domain.Entities.User", b =>
+            {
+                b.Navigation("EmployeeRequests");
             });
 #pragma warning restore 612, 618
     }

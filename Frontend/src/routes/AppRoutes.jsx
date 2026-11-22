@@ -11,16 +11,16 @@ import HRDashboard from "../pages/hr/HRDashboard";
 import PendingRequests from "../pages/hr/PendingRequests";
 import ApproveRequest from "../pages/hr/ApproveRequest";
 import useAuth from "../hooks/useAuth";
-import {PATHS, homePathForRole } from "../utils/constants";
+import { PATHS, homePathForRole } from "../utils/constants";
 
 export default function AppRoutes() {
-  const { user } = useAuth();
+  const { user, role } = useAuth();
 
   return (
     <Routes>
       <Route
         path="/"
-        element={<Navigate to={"/employee/dashboard"} replace />}
+        element={<Navigate to={user ? homePathForRole(role) : PATHS.LOGIN} replace />}
       />
 
       <Route element={<AuthLayout />}>
@@ -28,18 +28,18 @@ export default function AppRoutes() {
         <Route path={PATHS.LOGIN} element={<Login />} />
       </Route>
 
-        <Route element={<DashboardLayout />}>
-          <Route path={PATHS.EMP_DASHBOARD} element={<EmployeeDashboard />} />
-          <Route path={PATHS.EMP_NEW} element={<NewRequest />} />
-          <Route path={PATHS.EMP_ALL} element={<AllRequests />} />
-          <Route path={PATHS.EMP_DETAIL()} element={<RequestDetails />} />
-        </Route>
+      <Route element={<DashboardLayout />}>
+        <Route path={PATHS.EMP_DASHBOARD} element={<EmployeeDashboard />} />
+        <Route path={PATHS.EMP_NEW} element={<NewRequest />} />
+        <Route path={PATHS.EMP_ALL} element={<AllRequests />} />
+        <Route path={PATHS.EMP_DETAIL()} element={<RequestDetails />} />
+      </Route>
 
-        <Route element={<DashboardLayout />}>
-          <Route path={PATHS.HR_DASHBOARD} element={<HRDashboard />} />
-          <Route path={PATHS.HR_PENDING} element={<PendingRequests />} />
-          <Route path={PATHS.HR_DETAIL()} element={<ApproveRequest />} />
-        </Route>
+      <Route element={<DashboardLayout />}>
+        <Route path={PATHS.HR_DASHBOARD} element={<HRDashboard />} />
+        <Route path={PATHS.HR_PENDING} element={<PendingRequests />} />
+        <Route path={PATHS.HR_DETAIL()} element={<ApproveRequest />} />
+      </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

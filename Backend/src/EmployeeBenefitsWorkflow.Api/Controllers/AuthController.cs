@@ -1,4 +1,6 @@
 using EmployeeBenefitsWorkflow.Application.DTOs;
+using EmployeeBenefitsWorkflow.Application.interfaces.Service;
+using EmployeeBenefitsWorkflow.Application.service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeBenefitsWorkflow.Api.Controllers;
@@ -7,6 +9,13 @@ namespace EmployeeBenefitsWorkflow.Api.Controllers;
 [Route("api/auth")]
 public class AuthController : Controller
 {
+    private readonly IAuthService _userAuthService;
+
+    public AuthController(IAuthService userAuthService)
+    {
+        _userAuthService=userAuthService;
+    }
+
     [HttpPost("register")]
     public IActionResult UseRegister(RequestUserDto user)
     {

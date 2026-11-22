@@ -11,9 +11,9 @@ public class ApplicationDBContext : DbContext  // maps to SQL Database
     }
     public DbSet<User> Users { get; set; }    // maps to SQL Database table 
 
-    public DbSet<ReimbursementRequest> Requests {get;set;} 
+    public DbSet<ReimbursementRequest> Requests { get; set; }
 
-    public DbSet<RequestDecisions> RequestDecisions {get;set;}
+    public DbSet<RequestDecisions> RequestDecisions { get; set; }
 
 
 
@@ -44,5 +44,32 @@ public class ApplicationDBContext : DbContext  // maps to SQL Database
         {
             modelBuilder.Entity<User>().HasData(user);
         }
+
+
+        modelBuilder.Entity<ReimbursementRequest>(entity =>
+        {
+            entity.HasOne(r => r.Employee)
+            .WithMany(u => u.EmployeeRequests)
+            .HasForeignKey(r => r.EmployeeId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+        });
+
+
+        modelBuilder.Entity<RequestDecisions>(entity =>
+        {
+            entity.HasOne(r => r.Request)
+            .WithOne()
+            .HasForeignKey<RequestDecisions>(r => r.RequestId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(r => r.Hr)
+            .WithMany()
+            .HasForeignKey(r => r.HrId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        });
     }
 }
