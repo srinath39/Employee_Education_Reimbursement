@@ -21,6 +21,8 @@ public class ApplicationDBContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        // Fluent API 
+
         // User configuration
         modelBuilder.Entity<User>(entity =>
         {
@@ -33,6 +35,11 @@ public class ApplicationDBContext : DbContext
         });
 
         // ReimbursementRequest configuration
+        modelBuilder.Entity<ReimbursementRequest>().Property(request=>request.ClaimAmount)
+        .HasColumnName("ClaimExpense")
+        .HasColumnType("decimal(10,2)")
+        .HasDefaultValue("0.0");
+
         modelBuilder.Entity<ReimbursementRequest>(entity =>
         {
             entity.ToTable("ReimbursementRequests");
@@ -75,6 +82,10 @@ public class ApplicationDBContext : DbContext
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
         });
+
+        // set schema
+        modelBuilder.HasDefaultSchema("dbo");
+
 
         // Seed data
         var filePath = Path.GetFullPath(
