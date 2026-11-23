@@ -97,6 +97,9 @@ public class ApplicationDBContext : DbContext
         modelBuilder.Entity<User>().HasData(users);
     }
 
+    // Stored Procedure 
+    // use DBset for select operations, and Database Property for INSERT/UPDATE/DELETE operations 
+
     public List<ReimbursementRequest> Sp_getAllRequests()
     {
         return Requests.FromSqlRaw("EXECUTE [dbo].[GetAllRequest]").ToList();
