@@ -40,6 +40,10 @@ public class ApplicationDBContext : DbContext
         .HasColumnType("decimal(10,2)")
         .HasDefaultValue("0.0");
 
+        modelBuilder.Entity<ReimbursementRequest>().HasIndex(request=>request.RequestId).IsUnique();
+
+        modelBuilder.Entity<ReimbursementRequest>().HasCheckConstraint("chk_claimExpense","[ClaimExpense]>=0.0 AND [ClaimExpense]<=10000.00");
+
         modelBuilder.Entity<ReimbursementRequest>(entity =>
         {
             entity.ToTable("ReimbursementRequests");

@@ -16,7 +16,7 @@ partial class ApplicationDBContextModelSnapshot : ModelSnapshot
     // If you encounter a merge conflict in the line below, it means you need to
     // discard one of the migration branches and recreate its migrations on top of
     // the other branch. See https://aka.ms/efcore-docs-migrations-conflicts for more info.
-    public override string LastMigrationId => "20261123110447_changeAllRequestProcedure";
+    public override string LastMigrationId => "20261123111827_indexForRequestIdAndConstraints";
 
     protected override void BuildModel(ModelBuilder modelBuilder)
     {
@@ -55,7 +55,13 @@ partial class ApplicationDBContextModelSnapshot : ModelSnapshot
 
                 b.HasIndex("EmployeeId");
 
-                b.ToTable("ReimbursementRequests", "dbo");
+                b.HasIndex("RequestId")
+                    .IsUnique();
+
+                b.ToTable("ReimbursementRequests", "dbo", t =>
+                    {
+                        t.HasCheckConstraint("chk_claimExpense", "[ClaimExpense]>=0.0 AND [ClaimExpense]<=10000.00");
+                    });
             });
 
         modelBuilder.Entity("EmployeeBenefitsWorkflow.Domain.Entities.RequestDecisions", b =>
