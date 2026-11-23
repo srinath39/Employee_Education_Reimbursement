@@ -23,6 +23,10 @@ public class RequestDecisions
     [Required]
     public EnumRequestStatus RequestStatus { get;  set; }
 
+    public  RequestDecisions()
+    {
+    }
+
     public RequestDecisions(ReimbursementRequest request)
     {
         Request = request;

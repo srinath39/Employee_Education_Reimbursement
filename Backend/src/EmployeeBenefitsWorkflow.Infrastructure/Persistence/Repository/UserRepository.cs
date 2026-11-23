@@ -13,14 +13,15 @@ public class UserRepository : IUserRepository
         _db = dbContext;
     }
 
-    public User GetUserByUserId(Guid userId)
+    public async Task<User> GetUserByUserId(Guid userId)
     {
-        return _db.Users.Include(u => u.EmployeeRequests).Include(u => u.HrDecisions).FirstOrDefault(user => user.Id.Equals(userId))!;
+        User? user=await _db.Users.Include(u => u.EmployeeRequests).Include(u => u.HrDecisions).FirstOrDefaultAsync(user => user.Id.Equals(userId))!;
+        return user!;
     }
 
-    public int UpdateUserByUserId(Guid userId, string updatedName)
+    public async Task<int> UpdateUserByUserId(Guid userId, string updatedName)
     {
-        User user = _db.Users.FirstOrDefault(user => user.Id.Equals(userId))!;
-        return _db.Sp_UpdateUser(updatedName, user.Email);
+        User? user = await _db.Users.FirstOrDefaultAsync(user => user.Id.Equals(userId))!;
+        return _db.Sp_UpdateUser(updatedName, user!.Email);
     }
 }

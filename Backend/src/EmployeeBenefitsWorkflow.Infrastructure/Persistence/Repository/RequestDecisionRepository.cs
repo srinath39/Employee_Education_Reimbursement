@@ -17,23 +17,23 @@ public class RequestDecisionRepository : IRequestDecisionRepository
         _db=dbContext;
     }
 
-    public void CreateRequestDecision(RequestDecisions requestDecision)
+    public async Task CreateRequestDecision(RequestDecisions requestDecision)
     {
-        _db.RequestDecisions.Add(requestDecision);
+        await _db.RequestDecisions.AddAsync(requestDecision);
     }
 
-    public List<RequestDecisions> GetAllRequestDecisionsByRequestStatus(EnumRequestStatus status)
+    public async Task<List<RequestDecisions>> GetAllRequestDecisionsByRequestStatus(EnumRequestStatus status)
     {
-        return _db.RequestDecisions.Include(rd=>rd.Request).Include(rd=>rd.Hr).Where(requestDecision => requestDecision.RequestStatus.Equals(status)).ToList();
+        return await _db.RequestDecisions.Include(rd=>rd.Request).Include(rd=>rd.Hr).Where(requestDecision => requestDecision.RequestStatus.Equals(status)).ToListAsync();
     }
 
-    public List<RequestDecisions> GetRequestDecisionByHrId(Guid hrId)
+    public async Task<List<RequestDecisions>> GetRequestDecisionByHrId(Guid hrId)
     {
-        return _db.RequestDecisions.Include(rd=>rd.Request).Include(rd=>rd.Hr).Where(requestDecision => requestDecision.HrId.Equals(hrId)).ToList();
+        return await _db.RequestDecisions.Include(rd=>rd.Request).Include(rd=>rd.Hr).Where(requestDecision => requestDecision.HrId.Equals(hrId)).ToListAsync();
     }
 
-    public void SaveRequestDecisionsChanges()
+    public async Task SaveRequestDecisionsChanges()
     {
-        _db.SaveChanges();
+        await _db.SaveChangesAsync();
     }
 }

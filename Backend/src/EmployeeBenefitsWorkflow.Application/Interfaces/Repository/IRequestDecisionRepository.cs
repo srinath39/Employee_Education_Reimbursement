@@ -6,12 +6,12 @@ namespace EmployeeBenefitsWorkflow.Application.interfaces.Repository;
 
 public interface IRequestDecisionRepository
 {
-    public List<RequestDecisions> GetRequestDecisionByHrId(Guid hrId);
+    public Task<List<RequestDecisions>> GetRequestDecisionByHrId(Guid hrId);
 
-    public void SaveRequestDecisionsChanges();
+    public Task SaveRequestDecisionsChanges();
 
-    public List<RequestDecisions> GetAllRequestDecisionsByRequestStatus(EnumRequestStatus status);
+    public Task<List<RequestDecisions>> GetAllRequestDecisionsByRequestStatus(EnumRequestStatus status);
 
-    public void CreateRequestDecision(RequestDecisions requestDecision);
+    public Task CreateRequestDecision(RequestDecisions requestDecision);
 
 }

@@ -17,27 +17,27 @@ public class AuthController : Controller
     }
 
     [HttpPost("register")]
-    public IActionResult UseRegister(RequestUserDto user)
+    public async Task<IActionResult> UseRegister(RequestUserDto user)
     {
         return Ok(user);
     }
 
     [HttpPost("login")]
-    public IActionResult UserLogin(RequestUserDto user)
+    public async Task<IActionResult> UserLogin(RequestUserDto user)
     {
         return Ok(user);
     }
 
     [HttpGet("me")]
-    public IActionResult GetUser()
+    public async Task<IActionResult> GetUser()
     {
         return Ok();
     }
 
     [HttpPost("{id:guid}/updateName")]
-    public IActionResult UpdateUserName(Guid id,[FromQuery] string name)
+    public async Task<IActionResult> UpdateUserName(Guid id,[FromQuery] string name)
     {
-        _userAuthService.updateUserName(id,name);
+        await _userAuthService.updateUserName(id,name);
         return Ok();
     }
 

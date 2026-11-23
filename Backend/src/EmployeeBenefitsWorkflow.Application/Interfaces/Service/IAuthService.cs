@@ -4,9 +4,9 @@ namespace EmployeeBenefitsWorkflow.Application.interfaces.Service;
 
 public interface IAuthService
 {
-    public ResponseUserDto UserLogin(RequestUserDto userDto);
+    public Task<ResponseUserDto> UserLogin(RequestUserDto userDto);
 
-    public ResponseUserDto RegisterUser(RequestUserDto userDto);
+    public Task<ResponseUserDto> RegisterUser(RequestUserDto userDto);
 
-    public void updateUserName(Guid userId,string updatedName);
+    public Task updateUserName(Guid userId,string updatedName);
 }

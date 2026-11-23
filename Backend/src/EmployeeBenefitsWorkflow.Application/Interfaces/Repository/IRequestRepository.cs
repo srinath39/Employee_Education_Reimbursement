@@ -6,14 +6,14 @@ namespace EmployeeBenefitsWorkflow.Application.interfaces.Repository;
 
 public interface IRequestRepository
 {
-    public Guid CreateRequest(ReimbursementRequest request);
+    public Task<Guid> CreateRequest(ReimbursementRequest request);
 
-    public void SaveRequestChanges();
+    public Task SaveRequestChanges();
 
-    public List<ReimbursementRequest> GetAllRequestByEmployeeId(Guid empId);
+    public Task<List<ReimbursementRequest>> GetAllRequestByEmployeeId(Guid empId);
 
-    public ReimbursementRequest GetRequestByRequestId(Guid requestId);
+    public Task<ReimbursementRequest> GetRequestByRequestId(Guid requestId);
 
-    public List<ReimbursementRequest> GetAllRequestByRequestStatus(EnumRequestStatus status);
+    public Task<List<ReimbursementRequest>> GetAllRequestByRequestStatus(EnumRequestStatus status);
 
 }

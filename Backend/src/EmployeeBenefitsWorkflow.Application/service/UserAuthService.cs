@@ -13,22 +13,22 @@ public class UserAuthService : IAuthService
         _userRepository=userRepository;
     }
     
-    public ResponseUserDto UserLogin(RequestUserDto userDto)
+    public async Task<ResponseUserDto> UserLogin(RequestUserDto userDto)
     {
         // login logic 
         return new ResponseUserDto();
     }
 
-    public ResponseUserDto RegisterUser(RequestUserDto userDto)
+    public async Task<ResponseUserDto> RegisterUser(RequestUserDto userDto)
     {
         // login logic 
         return new ResponseUserDto();
     }
 
     // testing puporse only 
-    public void updateUserName(Guid userId,string updatedName)
+    public async Task updateUserName(Guid userId,string updatedName)
     {
-        _userRepository.UpdateUserByUserId(userId,updatedName);
+       await  _userRepository.UpdateUserByUserId(userId,updatedName);
     }
 
 

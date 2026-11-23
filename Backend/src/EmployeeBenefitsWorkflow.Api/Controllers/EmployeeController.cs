@@ -26,33 +26,33 @@ public class EmployeeController : Controller
     }
 
     [HttpPost("")]
-    public IActionResult CreateRequest([FromHeader(Name ="UserId")] Guid empId,RequestReimbursmentDto request)
+    public async Task<IActionResult> CreateRequest([FromHeader(Name ="UserId")] Guid empId,RequestReimbursmentDto request)
     {
-        return Ok(_service.CreateRequest(empId,request));
+        return Ok(await _service.CreateRequest(empId,request));
 
     }
 
     [HttpGet("mine")]
-    public IActionResult GetAllRequest([FromHeader(Name ="UserId")] Guid empId)
+    public async Task<IActionResult> GetAllRequest([FromHeader(Name ="UserId")] Guid empId)
     {
-        return Ok(_service.GetAllRequestOfEmployee(empId));
+        return Ok(await _service.GetAllRequestOfEmployee(empId));
     }
 
     [HttpGet("summary")]
-    public IActionResult GetSummary([FromHeader(Name ="UserId")] Guid empId)
+    public async Task<IActionResult> GetSummary([FromHeader(Name ="UserId")] Guid empId)
     {
-        return Ok(_service.GetEmployeeStatistics(empId));
+        return Ok(await _service.GetEmployeeStatistics(empId));
     }
 
     [HttpGet("{id:guid}")]
-    public IActionResult GetSpecificRequest(Guid id)
+    public async Task<IActionResult> GetSpecificRequest(Guid id)
     {
-        return Ok(_service.GetRequestById(id));
+        return Ok(await _service.GetRequestById(id));
     }
 
     // testing purpose 
     [HttpGet("env")]
-    public IActionResult GetEnvironmentDetails()
+    public async Task<IActionResult> GetEnvironmentDetails()
     {
         return Ok(rootPath+"\n"+webRootPath+"\n"+_webHostEnvironmente.EnvironmentName);
     }

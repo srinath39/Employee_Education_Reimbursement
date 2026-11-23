@@ -16,28 +16,28 @@ public class HrController : Controller
     }
 
     [HttpGet("summary")]
-    public IActionResult GetSummary([FromHeader(Name = "UserId")] Guid hrId)
+    public async Task<IActionResult> GetSummary([FromHeader(Name = "UserId")] Guid hrId)
     {
-        return Ok(_service.GetHrStatistics(hrId));
+        return Ok(await _service.GetHrStatistics(hrId));
     }
 
     [HttpGet("pendingRequests")]
-    public IActionResult GetAllPendingRequests()
+    public async Task<IActionResult> GetAllPendingRequests()
     {
-        return Ok(_service.GetAllPendingRequestOfHr());
+        return Ok(await _service.GetAllPendingRequestOfHr());
     }
 
     [HttpPost("request/{requestId:guid}/approve")]
-    public IActionResult ApproveRequest([FromHeader(Name = "UserId")] Guid hrId, Guid requestId)
+    public async Task<IActionResult> ApproveRequest([FromHeader(Name = "UserId")] Guid hrId, Guid requestId)
     {
-        _service.ApproveRequest(hrId, requestId);
+        await _service.ApproveRequest(hrId, requestId);
         return Ok();
     }
 
     [HttpPost("request/{requestId:guid}/reject")]
-    public IActionResult RejectRequest([FromHeader(Name = "UserId")] Guid hrId, Guid requestId)
+    public async Task<IActionResult> RejectRequest([FromHeader(Name = "UserId")] Guid hrId, Guid requestId)
     {
-        _service.RejectRequest(hrId, requestId);
+        await _service.RejectRequest(hrId, requestId);
         return Ok();
     }
 

@@ -17,19 +17,19 @@ public class RequestRepository : IRequestRepository
         _db = dBContext;
     }
 
-    public Guid CreateRequest(ReimbursementRequest request)
+    public async Task<Guid> CreateRequest(ReimbursementRequest request)
     {
-        _db.Requests.Add(request);
-        SaveRequestChanges();
+        await _db.Requests.AddAsync(request);
+        await SaveRequestChanges();
         return request.RequestId;
     }
 
-    public List<ReimbursementRequest> GetAllRequestByEmployeeId(Guid empId)
+    public async Task<List<ReimbursementRequest>> GetAllRequestByEmployeeId(Guid empId)
     {
-        var requests = _db.Sp_getAllRequests()
-        .AsEnumerable()
+        var requests = await _db.Sp_getAllRequests()
+        .AsAsyncEnumerable()
         .Where(r => r.EmployeeId == empId)
-        .ToList();
+        .ToListAsync();
 
         foreach (var request in requests)
         {
@@ -41,18 +41,19 @@ public class RequestRepository : IRequestRepository
         return requests;
     }
 
-    public List<ReimbursementRequest> GetAllRequestByRequestStatus(EnumRequestStatus status)
+    public async Task<List<ReimbursementRequest>> GetAllRequestByRequestStatus(EnumRequestStatus status)
     {
-        return _db.Requests.Include(r => r.Employee).Where(request => request.RequestStatus.Equals(status)).ToList();
+        return await _db.Requests.Include(r => r.Employee).Where(request => request.RequestStatus.Equals(status)).ToListAsync();
     }
 
-    public ReimbursementRequest GetRequestByRequestId(Guid requestId)
+    public async Task<ReimbursementRequest> GetRequestByRequestId(Guid requestId)
     {
-        return _db.Requests.Include(r => r.Employee).FirstOrDefault(request => request.RequestId.Equals(requestId))!;
+        ReimbursementRequest? request = await _db.Requests.Include(r => r.Employee).FirstOrDefaultAsync(request => request.RequestId.Equals(requestId))!;
+        return request!;
     }
 
-    public void SaveRequestChanges()
+    public async Task SaveRequestChanges()
     {
-        _db.SaveChanges();
+       await _db.SaveChangesAsync();
     }
 }
