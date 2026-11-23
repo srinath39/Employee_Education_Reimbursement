@@ -3,6 +3,7 @@
 using EmployeeBenefitsWorkflow.Application.interfaces.Repository;
 using EmployeeBenefitsWorkflow.Domain.Entities;
 using EmployeeBenefitsWorkflow.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeBenefitsWorkflow.Infrastructure.Persistence.Repository;
 
@@ -13,7 +14,7 @@ public class RequestRepository : IRequestRepository
 
     public RequestRepository(ApplicationDBContext dBContext)
     {
-        _db=dBContext;
+        _db = dBContext;
     }
 
     public Guid CreateRequest(ReimbursementRequest request)
@@ -25,17 +26,29 @@ public class RequestRepository : IRequestRepository
 
     public List<ReimbursementRequest> GetAllRequestByEmployeeId(Guid empId)
     {
-        return _db.Sp_getAllRequests().Where(request=>request.EmployeeId.Equals(empId)).ToList();
+        var requests = _db.Sp_getAllRequests()
+        .AsEnumerable()
+        .Where(r => r.EmployeeId == empId)
+        .ToList();
+
+        foreach (var request in requests)
+        {
+            _db.Entry(request)
+                .Reference(r => r.Employee)
+                .Load();
+        }
+
+        return requests;
     }
 
     public List<ReimbursementRequest> GetAllRequestByRequestStatus(EnumRequestStatus status)
     {
-        return _db.Requests.Where(request=>request.RequestStatus.Equals(status)).ToList();
+        return _db.Requests.Include(r => r.Employee).Where(request => request.RequestStatus.Equals(status)).ToList();
     }
 
     public ReimbursementRequest GetRequestByRequestId(Guid requestId)
     {
-        return _db.Requests.FirstOrDefault(request=>request.RequestId.Equals(requestId))!;
+        return _db.Requests.Include(r => r.Employee).FirstOrDefault(request => request.RequestId.Equals(requestId))!;
     }
 
     public void SaveRequestChanges()

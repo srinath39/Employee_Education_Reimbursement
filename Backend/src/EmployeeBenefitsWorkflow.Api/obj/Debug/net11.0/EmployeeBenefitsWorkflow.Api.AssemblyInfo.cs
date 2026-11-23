@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EmployeeBenefitsWorkflow.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1b7a7b6c30c47f869f1bf9465ba2b52bd760a15b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d3612c62201e274bad096bde35d1c85cf1956647")]
 [assembly: System.Reflection.AssemblyProductAttribute("EmployeeBenefitsWorkflow.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EmployeeBenefitsWorkflow.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

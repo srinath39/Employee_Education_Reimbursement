@@ -27,6 +27,8 @@ public class ReimbursementRequest
     [Required]
     public EnumRequestStatus RequestStatus { get; set; }
 
+    public RequestDecisions Decision {get;set;} =null!;
+
 
     // public List<RequestDocuments>? RequestDocuments { get; private set; }
 

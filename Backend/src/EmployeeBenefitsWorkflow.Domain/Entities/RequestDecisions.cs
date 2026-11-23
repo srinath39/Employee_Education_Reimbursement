@@ -23,8 +23,9 @@ public class RequestDecisions
     [Required]
     public EnumRequestStatus RequestStatus { get;  set; }
 
-    public RequestDecisions()
+    public RequestDecisions(ReimbursementRequest request)
     {
+        Request = request;
     }
 
     public RequestDecisions(ReimbursementRequest request, User user, EnumRequestStatus status)

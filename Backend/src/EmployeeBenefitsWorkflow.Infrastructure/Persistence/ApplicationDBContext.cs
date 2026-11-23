@@ -42,11 +42,10 @@ public class ApplicationDBContext : DbContext
 
         modelBuilder.Entity<ReimbursementRequest>().HasIndex(request=>request.RequestId).IsUnique();
 
-        modelBuilder.Entity<ReimbursementRequest>().HasCheckConstraint("chk_claimExpense","[ClaimExpense]>=0.0 AND [ClaimExpense]<=10000.00");
-
         modelBuilder.Entity<ReimbursementRequest>(entity =>
         {
-            entity.ToTable("ReimbursementRequests");
+            entity.ToTable("ReimbursementRequests", table =>
+                table.HasCheckConstraint("chk_claimExpense", "[ClaimExpense]>=0.0 AND [ClaimExpense]<=10000.00"));
 
             entity.HasKey(r => r.RequestId);
 
@@ -74,14 +73,14 @@ public class ApplicationDBContext : DbContext
             entity.Property(r => r.HrId)
                 .HasColumnType("uniqueidentifier");
 
-            entity.HasOne(r => r.Request)
-                .WithOne()
+            entity.HasOne(rd => rd.Request)
+                .WithOne(r=>r.Decision)
                 .HasForeignKey<RequestDecisions>(r => r.RequestId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
             entity.HasOne(r => r.Hr)
-                .WithMany()
+                .WithMany(u=>u.HrDecisions)
                 .HasForeignKey(r => r.HrId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
@@ -115,9 +114,9 @@ public class ApplicationDBContext : DbContext
     // Stored Procedure 
     // use DBset for select operations, and Database Property for INSERT/UPDATE/DELETE operations 
 
-    public List<ReimbursementRequest> Sp_getAllRequests()
+    public IQueryable<ReimbursementRequest> Sp_getAllRequests()
     {
-        return Requests.FromSqlRaw("EXECUTE [dbo].[GetAllRequest]").ToList();
+        return Requests.FromSqlRaw("EXECUTE [dbo].[GetAllRequest]");
     }
 
     public int Sp_InsertNewUser(User user)

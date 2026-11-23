@@ -3,6 +3,7 @@
 using EmployeeBenefitsWorkflow.Application.interfaces.Repository;
 using EmployeeBenefitsWorkflow.Domain.Entities;
 using EmployeeBenefitsWorkflow.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeBenefitsWorkflow.Infrastructure.Persistence.Repository;
 
@@ -23,12 +24,12 @@ public class RequestDecisionRepository : IRequestDecisionRepository
 
     public List<RequestDecisions> GetAllRequestDecisionsByRequestStatus(EnumRequestStatus status)
     {
-        return _db.RequestDecisions.Where(requestDecision => requestDecision.RequestStatus.Equals(status)).ToList();
+        return _db.RequestDecisions.Include(rd=>rd.Request).Include(rd=>rd.Hr).Where(requestDecision => requestDecision.RequestStatus.Equals(status)).ToList();
     }
 
     public List<RequestDecisions> GetRequestDecisionByHrId(Guid hrId)
     {
-        return _db.RequestDecisions.Where(requestDecision => requestDecision.HrId.Equals(hrId)).ToList();
+        return _db.RequestDecisions.Include(rd=>rd.Request).Include(rd=>rd.Hr).Where(requestDecision => requestDecision.HrId.Equals(hrId)).ToList();
     }
 
     public void SaveRequestDecisionsChanges()

@@ -20,7 +20,9 @@ public class User
     [Required]
     public string Email { get;  set; } = null!;
 
-    public List<ReimbursementRequest> EmployeeRequests {get; set;} =new();
+    public ICollection<ReimbursementRequest> EmployeeRequests {get; set;} =null!;
+
+    public ICollection<RequestDecisions> HrDecisions {get;set;} =null!;
 
     public User()
     {
