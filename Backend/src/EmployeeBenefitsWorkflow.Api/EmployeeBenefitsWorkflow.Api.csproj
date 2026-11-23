@@ -4,6 +4,7 @@
     <TargetFramework>net11.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>EmployeeBenefitsWorkflow.Api-cc4f97f1-30b1-42b0-8c3d-1c2bb7d2526a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -34,4 +34,11 @@ public class AuthController : Controller
         return Ok();
     }
 
+    [HttpPost("{id:guid}/updateName")]
+    public IActionResult UpdateUserName(Guid id,[FromQuery] string name)
+    {
+        _userAuthService.updateUserName(id,name);
+        return Ok();
+    }
+
 }

@@ -1358,9 +1358,9 @@
               "target": "Package",
               "version": "[11.0.0, )"
             },
-            "MySql.EntityFrameworkCore": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[11.0.0-preview, )"
+              "version": "[11.0.0, )"
             }
           },
           "imports": [

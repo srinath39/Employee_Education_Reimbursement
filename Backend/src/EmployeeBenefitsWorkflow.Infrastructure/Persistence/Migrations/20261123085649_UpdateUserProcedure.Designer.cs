@@ -3,6 +3,7 @@ using System;
 using EmployeeBenefitsWorkflow.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -11,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeBenefitsWorkflow.Infrastructure.Persistence.Migrations;
 
 [DbContext(typeof(ApplicationDBContext))]
-[Migration("20261117184309_new_table_and_relations")]
-partial class _20261117184309_new_table_and_relations
+[Migration("20261123085649_UpdateUserProcedure")]
+partial class _20261123085649_UpdateUserProcedure
 {
     /// <inheritdoc />
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,13 +21,15 @@ partial class _20261117184309_new_table_and_relations
 #pragma warning disable 612, 618
         modelBuilder
             .HasAnnotation("ProductVersion", "11.0.0")
-            .HasAnnotation("Relational:MaxIdentifierLength", 64);
+            .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+        SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
         modelBuilder.Entity("EmployeeBenefitsWorkflow.Domain.Entities.ReimbursementRequest", b =>
             {
                 b.Property<Guid>("RequestId")
                     .ValueGeneratedOnAdd()
-                    .HasColumnType("char(36)");
+                    .HasColumnType("uniqueidentifier");
 
                 b.Property<decimal>("ClaimAmount")
                     .HasColumnType("decimal(18,2)");
@@ -34,10 +37,10 @@ partial class _20261117184309_new_table_and_relations
                 b.Property<string>("CourseName")
                     .IsRequired()
                     .HasMaxLength(100)
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("nvarchar(100)");
 
                 b.Property<Guid>("EmployeeId")
-                    .HasColumnType("char(36)");
+                    .HasColumnType("uniqueidentifier");
 
                 b.Property<int>("RequestStatus")
                     .HasColumnType("int");
@@ -53,13 +56,13 @@ partial class _20261117184309_new_table_and_relations
             {
                 b.Property<Guid>("DecisionId")
                     .ValueGeneratedOnAdd()
-                    .HasColumnType("char(36)");
+                    .HasColumnType("uniqueidentifier");
 
                 b.Property<Guid>("HrId")
-                    .HasColumnType("char(36)");
+                    .HasColumnType("uniqueidentifier");
 
                 b.Property<Guid>("RequestId")
-                    .HasColumnType("char(36)");
+                    .HasColumnType("uniqueidentifier");
 
                 b.Property<int>("RequestStatus")
                     .HasColumnType("int");
@@ -78,17 +81,17 @@ partial class _20261117184309_new_table_and_relations
             {
                 b.Property<Guid>("Id")
                     .ValueGeneratedOnAdd()
-                    .HasColumnType("char(36)");
+                    .HasColumnType("uniqueidentifier");
 
                 b.Property<string>("Email")
                     .IsRequired()
                     .HasMaxLength(100)
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("nvarchar(100)");
 
                 b.Property<string>("Name")
                     .IsRequired()
                     .HasMaxLength(100)
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("nvarchar(100)");
 
                 b.Property<int>("Role")
                     .HasColumnType("int");
@@ -96,6 +99,36 @@ partial class _20261117184309_new_table_and_relations
                 b.HasKey("Id");
 
                 b.ToTable("Users");
+
+                b.HasData(
+                    new
+                    {
+                        Id = new Guid("f3c7a1d2-4b5e-4c8a-9d2f-1a2b3c4d5e01"),
+                        Email = "srinath@example.com",
+                        Name = "Srinath",
+                        Role = 0
+                    },
+                    new
+                    {
+                        Id = new Guid("f3c7a1d2-4b5e-4c8a-9d2f-1a2b3c4d5e02"),
+                        Email = "sathvika@example.com",
+                        Name = "Sathvika",
+                        Role = 0
+                    },
+                    new
+                    {
+                        Id = new Guid("f3c7a1d2-4b5e-4c8a-9d2f-1a2b3c4d5e03"),
+                        Email = "meghana@example.com",
+                        Name = "Meghana",
+                        Role = 1
+                    },
+                    new
+                    {
+                        Id = new Guid("f3c7a1d2-4b5e-4c8a-9d2f-1a2b3c4d5e04"),
+                        Email = "sathya@example.com",
+                        Name = "Sathya",
+                        Role = 1
+                    });
             });
 
         modelBuilder.Entity("EmployeeBenefitsWorkflow.Domain.Entities.ReimbursementRequest", b =>

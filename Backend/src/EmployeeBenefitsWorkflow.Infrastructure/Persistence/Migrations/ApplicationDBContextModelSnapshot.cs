@@ -3,6 +3,7 @@ using System;
 using EmployeeBenefitsWorkflow.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -15,20 +16,22 @@ partial class ApplicationDBContextModelSnapshot : ModelSnapshot
     // If you encounter a merge conflict in the line below, it means you need to
     // discard one of the migration branches and recreate its migrations on top of
     // the other branch. See https://aka.ms/efcore-docs-migrations-conflicts for more info.
-    public override string LastMigrationId => "20261117185336_seed_data_into_users";
+    public override string LastMigrationId => "20261123085649_UpdateUserProcedure";
 
     protected override void BuildModel(ModelBuilder modelBuilder)
     {
 #pragma warning disable 612, 618
         modelBuilder
             .HasAnnotation("ProductVersion", "11.0.0")
-            .HasAnnotation("Relational:MaxIdentifierLength", 64);
+            .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+        SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
         modelBuilder.Entity("EmployeeBenefitsWorkflow.Domain.Entities.ReimbursementRequest", b =>
             {
                 b.Property<Guid>("RequestId")
                     .ValueGeneratedOnAdd()
-                    .HasColumnType("char(36)");
+                    .HasColumnType("uniqueidentifier");
 
                 b.Property<decimal>("ClaimAmount")
                     .HasColumnType("decimal(18,2)");
@@ -36,10 +39,10 @@ partial class ApplicationDBContextModelSnapshot : ModelSnapshot
                 b.Property<string>("CourseName")
                     .IsRequired()
                     .HasMaxLength(100)
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("nvarchar(100)");
 
                 b.Property<Guid>("EmployeeId")
-                    .HasColumnType("char(36)");
+                    .HasColumnType("uniqueidentifier");
 
                 b.Property<int>("RequestStatus")
                     .HasColumnType("int");
@@ -55,13 +58,13 @@ partial class ApplicationDBContextModelSnapshot : ModelSnapshot
             {
                 b.Property<Guid>("DecisionId")
                     .ValueGeneratedOnAdd()
-                    .HasColumnType("char(36)");
+                    .HasColumnType("uniqueidentifier");
 
                 b.Property<Guid>("HrId")
-                    .HasColumnType("char(36)");
+                    .HasColumnType("uniqueidentifier");
 
                 b.Property<Guid>("RequestId")
-                    .HasColumnType("char(36)");
+                    .HasColumnType("uniqueidentifier");
 
                 b.Property<int>("RequestStatus")
                     .HasColumnType("int");
@@ -80,17 +83,17 @@ partial class ApplicationDBContextModelSnapshot : ModelSnapshot
             {
                 b.Property<Guid>("Id")
                     .ValueGeneratedOnAdd()
-                    .HasColumnType("char(36)");
+                    .HasColumnType("uniqueidentifier");
 
                 b.Property<string>("Email")
                     .IsRequired()
                     .HasMaxLength(100)
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("nvarchar(100)");
 
                 b.Property<string>("Name")
                     .IsRequired()
                     .HasMaxLength(100)
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("nvarchar(100)");
 
                 b.Property<int>("Role")
                     .HasColumnType("int");

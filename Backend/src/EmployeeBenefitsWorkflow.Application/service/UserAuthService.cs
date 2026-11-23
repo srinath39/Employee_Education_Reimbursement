@@ -25,6 +25,11 @@ public class UserAuthService : IAuthService
         return new ResponseUserDto();
     }
 
+    // testing puporse only 
+    public void updateUserName(Guid userId,string updatedName)
+    {
+        _userRepository.UpdateUserByUserId(userId,updatedName);
+    }
 
 
 }

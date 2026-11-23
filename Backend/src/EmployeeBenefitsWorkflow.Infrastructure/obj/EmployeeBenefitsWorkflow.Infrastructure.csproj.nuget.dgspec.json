@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\backend\\src\\EmployeeBenefitsWorkflow.Infrastructure\\EmployeeBenefitsWorkflow.Infrastructure.csproj": {}
+    "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\Backend\\src\\EmployeeBenefitsWorkflow.Infrastructure\\EmployeeBenefitsWorkflow.Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\backend\\src\\EmployeeBenefitsWorkflow.Application\\EmployeeBenefitsWorkflow.Application.csproj": {
+    "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\Backend\\src\\EmployeeBenefitsWorkflow.Application\\EmployeeBenefitsWorkflow.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\backend\\src\\EmployeeBenefitsWorkflow.Application\\EmployeeBenefitsWorkflow.Application.csproj",
+        "projectUniqueName": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\Backend\\src\\EmployeeBenefitsWorkflow.Application\\EmployeeBenefitsWorkflow.Application.csproj",
         "projectName": "EmployeeBenefitsWorkflow.Application",
-        "projectPath": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\backend\\src\\EmployeeBenefitsWorkflow.Application\\EmployeeBenefitsWorkflow.Application.csproj",
+        "projectPath": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\Backend\\src\\EmployeeBenefitsWorkflow.Application\\EmployeeBenefitsWorkflow.Application.csproj",
         "packagesPath": "C:\\Users\\MangaliSrinath\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\backend\\src\\EmployeeBenefitsWorkflow.Application\\obj\\",
+        "outputPath": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\Backend\\src\\EmployeeBenefitsWorkflow.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -762,14 +762,14 @@
         }
       }
     },
-    "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\backend\\src\\EmployeeBenefitsWorkflow.Infrastructure\\EmployeeBenefitsWorkflow.Infrastructure.csproj": {
+    "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\Backend\\src\\EmployeeBenefitsWorkflow.Infrastructure\\EmployeeBenefitsWorkflow.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\backend\\src\\EmployeeBenefitsWorkflow.Infrastructure\\EmployeeBenefitsWorkflow.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\Backend\\src\\EmployeeBenefitsWorkflow.Infrastructure\\EmployeeBenefitsWorkflow.Infrastructure.csproj",
         "projectName": "EmployeeBenefitsWorkflow.Infrastructure",
-        "projectPath": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\backend\\src\\EmployeeBenefitsWorkflow.Infrastructure\\EmployeeBenefitsWorkflow.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\Backend\\src\\EmployeeBenefitsWorkflow.Infrastructure\\EmployeeBenefitsWorkflow.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\MangaliSrinath\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\backend\\src\\EmployeeBenefitsWorkflow.Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\Backend\\src\\EmployeeBenefitsWorkflow.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -791,8 +791,8 @@
             "framework": "net11.0",
             "targetAlias": "net11.0",
             "projectReferences": {
-              "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\backend\\src\\EmployeeBenefitsWorkflow.Application\\EmployeeBenefitsWorkflow.Application.csproj": {
-                "projectPath": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\backend\\src\\EmployeeBenefitsWorkflow.Application\\EmployeeBenefitsWorkflow.Application.csproj"
+              "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\Backend\\src\\EmployeeBenefitsWorkflow.Application\\EmployeeBenefitsWorkflow.Application.csproj": {
+                "projectPath": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\Backend\\src\\EmployeeBenefitsWorkflow.Application\\EmployeeBenefitsWorkflow.Application.csproj"
               },
               "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\Backend\\src\\EmployeeBenefitsWorkflow.Domain\\EmployeeBenefitsWorkflow.Domain.csproj": {
                 "projectPath": "C:\\Users\\MangaliSrinath\\OneDrive - Applied Information Sciences\\Desktop\\Employee_Education_Reimbursement\\Backend\\src\\EmployeeBenefitsWorkflow.Domain\\EmployeeBenefitsWorkflow.Domain.csproj"
@@ -827,9 +827,9 @@
               "target": "Package",
               "version": "[11.0.0, )"
             },
-            "MySql.EntityFrameworkCore": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[11.0.0-preview, )"
+              "version": "[11.0.0, )"
             }
           },
           "imports": [

@@ -1,75 +1,125 @@
 using EmployeeBenefitsWorkflow.Domain.Entities;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace EmployeeBenefitsWorkflow.Infrastructure.Persistence;
 
-public class ApplicationDBContext : DbContext  // maps to SQL Database 
+public class ApplicationDBContext : DbContext
 {
-
-    public ApplicationDBContext(DbContextOptions options) : base(options)
+    public ApplicationDBContext(
+        DbContextOptions<ApplicationDBContext> options)
+        : base(options)
     {
     }
-    public DbSet<User> Users { get; set; }    // maps to SQL Database table 
 
+    public DbSet<User> Users { get; set; }
     public DbSet<ReimbursementRequest> Requests { get; set; }
-
     public DbSet<RequestDecisions> RequestDecisions { get; set; }
 
-
-
-    // bind DBset to Database table
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>().ToTable("Users");
-        modelBuilder.Entity<ReimbursementRequest>().ToTable("ReimbursementRequests");
-        modelBuilder.Entity<RequestDecisions>().ToTable("RequestDecisions");
-
-        var filePath = Path.GetFullPath(
-        Path.Combine(
-            Directory.GetCurrentDirectory(),
-            "..",
-            "EmployeeBenefitsWorkflow.Infrastructure",
-            "Persistence",
-            "SeedDataJson",
-            "UserJson.json"
-        )
-        );
-
-
-        string userJson = File.ReadAllText(filePath);   // imported from System.IO included by default 
-        List<User> allUsersSeedDataList = System.Text.Json.JsonSerializer.Deserialize<List<User>>(userJson)!;
-        foreach (User user in allUsersSeedDataList)
+        // User configuration
+        modelBuilder.Entity<User>(entity =>
         {
-            modelBuilder.Entity<User>().HasData(user);
-        }
+            entity.ToTable("Users");
 
+            entity.HasKey(u => u.Id);
 
+            entity.Property(u => u.Id)
+                .HasColumnType("uniqueidentifier");
+        });
+
+        // ReimbursementRequest configuration
         modelBuilder.Entity<ReimbursementRequest>(entity =>
         {
+            entity.ToTable("ReimbursementRequests");
+
+            entity.HasKey(r => r.RequestId);
+
+            entity.Property(r => r.RequestId)
+                .HasColumnType("uniqueidentifier");
+
+            entity.Property(r => r.EmployeeId)
+                .HasColumnType("uniqueidentifier");
+
             entity.HasOne(r => r.Employee)
-            .WithMany(u => u.EmployeeRequests)
-            .HasForeignKey(r => r.EmployeeId)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
+                .WithMany(u => u.EmployeeRequests)
+                .HasForeignKey(r => r.EmployeeId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
-
+        // RequestDecisions configuration
         modelBuilder.Entity<RequestDecisions>(entity =>
         {
+            entity.ToTable("RequestDecisions");
+
+            entity.Property(r => r.RequestId)
+                .HasColumnType("uniqueidentifier");
+
+            entity.Property(r => r.HrId)
+                .HasColumnType("uniqueidentifier");
+
             entity.HasOne(r => r.Request)
-            .WithOne()
-            .HasForeignKey<RequestDecisions>(r => r.RequestId)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
+                .WithOne()
+                .HasForeignKey<RequestDecisions>(r => r.RequestId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
             entity.HasOne(r => r.Hr)
-            .WithMany()
-            .HasForeignKey(r => r.HrId)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
-
+                .WithMany()
+                .HasForeignKey(r => r.HrId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         });
+
+        // Seed data
+        var filePath = Path.GetFullPath(
+            Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "..",
+                "EmployeeBenefitsWorkflow.Infrastructure",
+                "Persistence",
+                "SeedDataJson",
+                "UserJson.json"
+            )
+        );
+
+        string userJson = File.ReadAllText(filePath);
+
+        var users = JsonSerializer.Deserialize<List<User>>(userJson)
+            ?? throw new InvalidOperationException(
+                "Unable to deserialize user seed data.");
+
+        modelBuilder.Entity<User>().HasData(users);
+    }
+
+    public List<ReimbursementRequest> Sp_getAllRequests()
+    {
+        return Requests.FromSqlRaw("EXECUTE [dbo].[GetAllRequest]").ToList();
+    }
+
+    public int Sp_InsertNewUser(User user)
+    {
+        SqlParameter[] parameters=new SqlParameter[]
+        {
+            new SqlParameter("@UserName",user.Name),
+            new SqlParameter("@UserRole",user.Role),
+            new SqlParameter("@UserEmail",user.Email)
+        };
+        return Database.ExecuteSqlRaw("EXECUTE [dbo].[GetAllRequest] @UserName @UserRole @UserEmail",parameters);
+    }
+
+    public int Sp_UpdateUser(string newName,string email)
+    {
+        SqlParameter[] parameters=new SqlParameter[]
+        {
+            new SqlParameter("@UserName",newName),
+            new SqlParameter("@UserEmail",email),
+        };
+        return Database.ExecuteSqlRaw("EXECUTE [dbo].[updateUser] @UserName,@UserEmail",parameters);
     }
 }

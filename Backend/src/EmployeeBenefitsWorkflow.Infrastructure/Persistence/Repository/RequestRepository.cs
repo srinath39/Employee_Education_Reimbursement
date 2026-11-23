@@ -25,7 +25,7 @@ public class RequestRepository : IRequestRepository
 
     public List<ReimbursementRequest> GetAllRequestByEmployeeId(Guid empId)
     {
-        return _db.Requests.Where(request=>request.EmployeeId.Equals(empId)).ToList();
+        return _db.Sp_getAllRequests().Where(request=>request.EmployeeId.Equals(empId)).ToList();
     }
 
     public List<ReimbursementRequest> GetAllRequestByRequestStatus(EnumRequestStatus status)

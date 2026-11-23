@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("EmployeeBenefitsWorkflow.Api-cc4f97f1-30b1-42b0-8c3d-1c2bb7d2526a")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("EmployeeBenefitsWorkflow.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ff0cd84dd07603906daff992eb1c0eb412ed10ab")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c9ee76fce8a105e06788a868cb7b9b1b63ef4bb4")]
 [assembly: System.Reflection.AssemblyProductAttribute("EmployeeBenefitsWorkflow.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EmployeeBenefitsWorkflow.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

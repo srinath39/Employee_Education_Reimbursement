@@ -23,10 +23,15 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddDbContext<ApplicationDBContext>(options =>   // dependency injection    // bu default it is scoped service 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrWhiteSpace(connectionString))
 {
-    options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection")!);    // telling the EF core that we are using SQL Server / MY SQl , and telling it to connect to the database using connection string 
-}); 
+    throw new InvalidOperationException(
+        "ConnectionStrings:DefaultConnection is missing. Set it with .NET User Secrets in Development " +
+        "or with the ConnectionStrings__DefaultConnection environment variable.");
+}
+
+builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(connectionString));
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
