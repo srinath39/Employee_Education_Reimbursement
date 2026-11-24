@@ -363,6 +363,87 @@
   color: #b42318;
 }
 
+.api-error {
+  margin: 0 0 16px;
+  border: 1px solid;
+  border-left-width: 4px;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.api-error--client {
+  border-color: #f2c879;
+  background: #fffbf1;
+  color: #75420b;
+}
+
+.api-error--server {
+  border-color: #f2aaaa;
+  background: #fff5f5;
+  color: #8d2424;
+}
+
+.api-error--network,
+.api-error--unknown {
+  border-color: #b7c9f3;
+  background: #f4f7ff;
+  color: #28457c;
+}
+
+.api-error-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px 10px;
+  margin-bottom: 6px;
+}
+
+.api-error-category {
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.api-error-status {
+  border-radius: 999px;
+  background: rgb(255 255 255 / 75%);
+  padding: 2px 9px;
+  font-size: 0.76rem;
+  font-weight: 650;
+}
+
+.api-error-message {
+  margin-bottom: 4px;
+  font-weight: 650;
+}
+
+.api-error-list {
+  margin: 7px 0;
+  padding-left: 21px;
+  font-size: 0.9rem;
+}
+
+.api-error-guidance {
+  margin-bottom: 0;
+  font-size: 0.88rem;
+}
+
+.api-error-retry {
+  margin-top: 11px;
+  border: 0;
+  border-radius: 7px;
+  background: #2456c4;
+  padding: 8px 12px;
+  color: white;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.api-error-retry:hover {
+  background: #1d459e;
+}
+
 @media (max-width: 820px) {
   .site-header-inner {
     width: min(100% - 32px, 680px);

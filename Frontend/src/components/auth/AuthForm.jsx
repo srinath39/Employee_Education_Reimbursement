@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Input from "../common/Input";
 import Button from "../common/Button";
+import ApiErrorAlert from "../common/ApiErrorAlert";
 
 // Shared by Register and Login.
 // fields: [{ name, label, type?, options? }]
@@ -20,7 +21,7 @@ export default function AuthForm({ title, fields, submitLabel, onSubmit, footer 
     try {
       await onSubmit(values);
     } catch (err) {
-      setError(err.message || "Something went wrong");
+      setError(err);
     } finally {
       setBusy(false);
     }
@@ -32,7 +33,7 @@ export default function AuthForm({ title, fields, submitLabel, onSubmit, footer 
       {fields.map((f) => (
         <Input key={f.name} {...f} value={values[f.name]} onChange={handleChange} required />
       ))}
-      {error && <p className="inline-error mb-3 text-sm" role="alert">{error}</p>}
+      <ApiErrorAlert error={error} />
       <Button type="submit" disabled={busy}>
         {busy ? "Please wait..." : submitLabel}
       </Button>

@@ -1,4 +1,5 @@
 import RequestTable from "../../components/requests/RequestTable";
+import ApiErrorAlert from "../../components/common/ApiErrorAlert";
 import useRequests from "../../hooks/useRequests";
 import { PATHS } from "../../utils/constants";
 import { REQUESTs } from "../../utils/constants";
@@ -9,7 +10,7 @@ export default function PendingRequests() {
   return (
     <>
       <h2>Pending Requests</h2>
-      {error && <p className="inline-error mb-3 text-sm" role="alert">{error}</p>}
+      <ApiErrorAlert error={error} />
       <RequestTable
         requests={requests}
         loading={loading}

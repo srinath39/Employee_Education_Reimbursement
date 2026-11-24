@@ -17,7 +17,7 @@ export default function useDashBoard({ role }) {
       }
       setStatistics(result);
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
+      setError(e);
     } finally {
       setLoading(false);
     }

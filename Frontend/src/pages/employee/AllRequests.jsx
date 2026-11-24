@@ -1,4 +1,5 @@
 import RequestTable from "../../components/requests/RequestTable";
+import ApiErrorAlert from "../../components/common/ApiErrorAlert";
 import useRequests from "../../hooks/useRequests";
 import {REQUESTs} from "../../utils/constants";
 
@@ -10,7 +11,7 @@ export default function AllRequests() {
   return (
     <>
       <h2>All Requests</h2>
-      {error && <p className="inline-error mb-3 text-sm" role="alert">{error}</p>}
+      <ApiErrorAlert error={error} />
       <RequestTable requests={requests} loading={loading} basePath={BASE_PATH} />
     </>
   );

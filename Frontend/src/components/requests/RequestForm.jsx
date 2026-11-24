@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Input from "../common/Input";
 import Button from "../common/Button";
+import ApiErrorAlert from "../common/ApiErrorAlert";
 
 export default function RequestForm({ onSubmit }) {
   const [values, setValues] = useState({ courseName: "", claimAmount: ""});
@@ -16,7 +17,7 @@ export default function RequestForm({ onSubmit }) {
     try {
       await onSubmit(values);
     } catch (err) {
-      setError(err.message);
+      setError(err);
     } finally {
       setBusy(false);
     }
@@ -37,7 +38,7 @@ export default function RequestForm({ onSubmit }) {
         onChange={handleChange}
         required
       />
-      {error && <p className="inline-error mb-3 text-sm" role="alert">{error}</p>}
+      <ApiErrorAlert error={error} />
       <Button type="submit" disabled={busy}>
         {busy ? "Submitting..." : "Submit request"}
       </Button>

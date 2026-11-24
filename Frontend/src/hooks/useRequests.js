@@ -16,7 +16,7 @@ export default function useRequests(scope = REQUESTs.ALL_EMP_REQUESTS) {
     try {
       setRequests(scope === REQUESTs.ALL_HR_PENDING_REQUESTS ? await getAllPendingRequests() : await getEmployeesAllRequests());
     } catch (e) {
-      setError(e.message);
+      setError(e);
     } finally {
       setLoading(false);
     }

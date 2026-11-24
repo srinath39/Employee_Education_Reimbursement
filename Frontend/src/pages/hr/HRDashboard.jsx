@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import StatsGrid from "../../components/dashboard/StatsGrid";
 import Loader from "../../components/common/Loader";
 import useDashBoard from "../../hooks/useDashboard";
+import ApiErrorAlert from "../../components/common/ApiErrorAlert";
 import { PATHS, ROLES } from "../../utils/constants";
 
 export default function HRDashboard() {
@@ -30,16 +31,7 @@ export default function HRDashboard() {
               { label: "Rejected", value: "-" },
             ]}
           />
-          <div className="inline-error flex items-center gap-3" role="alert">
-            <p>Failed to load statistics. Please reload again.</p>
-            <button
-              className="rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700"
-              onClick={reloadStatistics}
-              type="button"
-            >
-              Reload statistics
-            </button>
-          </div>
+          <ApiErrorAlert error={error} onRetry={reloadStatistics} />
         </>
       ) : (
         <StatsGrid
