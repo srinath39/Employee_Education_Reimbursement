@@ -368,7 +368,7 @@
   border: 1px solid;
   border-left-width: 4px;
   border-radius: 10px;
-  padding: 14px 16px;
+  padding: 10px 12px;
 }
 
 .api-error--client {
@@ -390,43 +390,19 @@
   color: #28457c;
 }
 
-.api-error-heading {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 7px 10px;
-  margin-bottom: 6px;
-}
-
-.api-error-category {
-  font-size: 0.76rem;
-  font-weight: 750;
-  letter-spacing: 0.045em;
-  text-transform: uppercase;
-}
-
-.api-error-status {
-  border-radius: 999px;
-  background: rgb(255 255 255 / 75%);
-  padding: 2px 9px;
-  font-size: 0.76rem;
-  font-weight: 650;
-}
-
 .api-error-message {
-  margin-bottom: 4px;
-  font-weight: 650;
+  margin-bottom: 0;
 }
 
 .api-error-list {
-  margin: 7px 0;
-  padding-left: 21px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
   font-size: 0.9rem;
 }
 
-.api-error-guidance {
-  margin-bottom: 0;
-  font-size: 0.88rem;
+.api-error-list li::before {
+  content: "- ";
 }
 
 .api-error-retry {
