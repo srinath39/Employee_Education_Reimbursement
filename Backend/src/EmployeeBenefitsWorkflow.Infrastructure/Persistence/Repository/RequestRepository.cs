@@ -46,10 +46,9 @@ public class RequestRepository : IRequestRepository
         return await _db.Requests.Include(r => r.Employee).Where(request => request.RequestStatus.Equals(status)).ToListAsync();
     }
 
-    public async Task<ReimbursementRequest> GetRequestByRequestId(Guid requestId)
+    public async Task<ReimbursementRequest?> GetRequestByRequestId(Guid requestId)
     {
-        ReimbursementRequest? request = await _db.Requests.Include(r => r.Employee).FirstOrDefaultAsync(request => request.RequestId.Equals(requestId))!;
-        return request!;
+        return await _db.Requests.Include(r => r.Employee).FirstOrDefaultAsync(request => request.RequestId.Equals(requestId));
     }
 
     public async Task SaveRequestChanges()

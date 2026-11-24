@@ -19,13 +19,13 @@ public class AuthController : Controller
     [HttpPost("register")]
     public async Task<IActionResult> UseRegister(RequestUserDto user)
     {
-        return Ok(user);
+        return Ok(await _userAuthService.RegisterUser(user));
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> UserLogin(RequestUserDto user)
     {
-        return Ok(user);
+        return Ok(await _userAuthService.UserLogin(user));
     }
 
     [HttpGet("me")]

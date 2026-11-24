@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using EmployeeBenefitsWorkflow.Infrastructure.Persistence;
 using EmployeeBenefitsWorkflow.Application.interfaces.Repository;
 using EmployeeBenefitsWorkflow.Infrastructure.Persistence.Repository;
+using EmployeeBenefitsWorkflow.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,11 +50,13 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 var app = builder.Build();
 
 
+app.UseExceptionHandler("/api/error/notify");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())   // app.Environment is IWebHostEnvironment   
 {
-    app.UseDeveloperExceptionPage();
+    app.UseGlobalExcpetionMiddleWare();  // testing purpose
 }
+
 // app.UseHttpsRedirection();
 
 app.UseCors("Frontend");

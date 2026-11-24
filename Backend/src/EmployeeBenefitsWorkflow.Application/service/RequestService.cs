@@ -1,10 +1,12 @@
 namespace EmployeeBenefitsWorkflow.Application.service;
 
 using EmployeeBenefitsWorkflow.Application.DTOs;
+using EmployeeBenefitsWorkflow.Application.Exceptions;
 using EmployeeBenefitsWorkflow.Application.interfaces.Repository;
 using EmployeeBenefitsWorkflow.Application.interfaces.Service;
 using EmployeeBenefitsWorkflow.Domain.Entities;
 using EmployeeBenefitsWorkflow.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 public class RequestService : IReimbursmentRequestService
 {
@@ -22,6 +24,7 @@ public class RequestService : IReimbursmentRequestService
 
     public async Task<ResponseEmployeeStatistics> GetEmployeeStatistics(Guid employeeId)
     {
+        ValidateId(employeeId, "Employee ID");
         // total submitted requests
         // total Under review requests
         // total rejected requests
@@ -43,25 +46,39 @@ public class RequestService : IReimbursmentRequestService
 
     public async Task<ResponseReimbursmentDto> CreateRequest(Guid empId, RequestReimbursmentDto requestDto)
     {
-        // user as employee id is required here 
-        User emp =await _userRepository.GetUserByUserId(empId);
+        ValidateId(empId, "Employee ID");
+        if (requestDto is null)
+            throw new BadRequestException("Request details are required.");
+
+        var validationResults = new List<ValidationResult>();
+        if (!Validator.TryValidateObject(requestDto, new ValidationContext(requestDto), validationResults, true))
+            throw new BadRequestException(validationResults[0].ErrorMessage ?? "Invalid request details.");
+        if (requestDto.CourseName.Length > 100)
+            throw new BadRequestException("Course name must not exceed 100 characters.");
+
+        User emp = await _userRepository.GetUserByUserId(empId)
+            ?? throw new NotFoundException("Employee not found.");
         ReimbursementRequest request = new ReimbursementRequest(emp, requestDto.CourseName, requestDto.ClaimAmount);
         Guid requestId = await _requestRepository.CreateRequest(request);
-        return GetResponseRequestDtoFromRequestEntity(await _requestRepository.GetRequestByRequestId(requestId));
+        ReimbursementRequest savedRequest = await _requestRepository.GetRequestByRequestId(requestId)
+            ?? throw new InternalServerException("The saved reimbursement request could not be retrieved.");
+        return GetResponseRequestDtoFromRequestEntity(savedRequest);
     }
 
     public async Task<List<ResponseReimbursmentDto>> GetAllRequestOfEmployee(Guid employeeId)
     {
+        ValidateId(employeeId, "Employee ID");
         List<ReimbursementRequest> totalEmpRequest = await _requestRepository.GetAllRequestByEmployeeId(employeeId);
         return totalEmpRequest.Where(request => request != null).Select(request => GetResponseRequestDtoFromRequestEntity(request)).ToList();
     }
 
     public async Task<ResponseReimbursmentDto> GetRequestById(Guid requestId)  // shared accross both HR and Employee 
     {
+        ValidateId(requestId, "Request ID");
         ReimbursementRequest? req = await _requestRepository.GetRequestByRequestId(requestId);
         if (req is null)
         {
-            throw new KeyNotFoundException("Request not found");
+            throw new NotFoundException("Request not found.");
         }
         return GetResponseRequestDtoFromRequestEntity(req);
     }
@@ -69,6 +86,7 @@ public class RequestService : IReimbursmentRequestService
 
     public async Task<ResponseHrStatistics> GetHrStatistics(Guid hrId)
     {
+        ValidateId(hrId, "HR ID");
         // total decisions done -> from request Decisions belongs to hrId
         List<RequestDecisions> empDecisions = await _requestDecisionRepository.GetRequestDecisionByHrId(hrId);
         empDecisions=empDecisions.Where(requestDecision => requestDecision != null).ToList();
@@ -97,15 +115,15 @@ public class RequestService : IReimbursmentRequestService
 
     public async Task ApproveRequest(Guid hrId, Guid requestId)
     {
-        // HR id is required here 
-        User hr = await _userRepository.GetUserByUserId(hrId);
+        ValidateId(hrId, "HR ID");
+        ValidateId(requestId, "Request ID");
+        User hr = await _userRepository.GetUserByUserId(hrId)
+            ?? throw new NotFoundException("HR user not found.");
         // steps :
         // current request with ID need to change status as APPROVE
-        ReimbursementRequest request =await  _requestRepository.GetRequestByRequestId(requestId);
-        if (request is null)
-        {
-            throw new NullReferenceException("Request is null");
-        }
+        ReimbursementRequest request = await _requestRepository.GetRequestByRequestId(requestId)
+            ?? throw new NotFoundException("Request not found.");
+        EnsureUnderReview(request);
         request.ApproveRequest();
         await _requestRepository.SaveRequestChanges();
         // A new RequestDecisions need to be created with request and HR details along with Decision
@@ -116,16 +134,15 @@ public class RequestService : IReimbursmentRequestService
 
     public async Task RejectRequest(Guid hrId, Guid requestId)
     {
-        // HR id is required here 
-        Task<User> task=_userRepository.GetUserByUserId(hrId);
-        User hr = await task;
+        ValidateId(hrId, "HR ID");
+        ValidateId(requestId, "Request ID");
+        User hr = await _userRepository.GetUserByUserId(hrId)
+            ?? throw new NotFoundException("HR user not found.");
         // steps :
         // current request with ID need to change status as REJECTED
-        ReimbursementRequest request =await _requestRepository.GetRequestByRequestId(requestId);
-        if (request is null)
-        {
-            throw new NullReferenceException("Request is null");
-        }
+        ReimbursementRequest request = await _requestRepository.GetRequestByRequestId(requestId)
+            ?? throw new NotFoundException("Request not found.");
+        EnsureUnderReview(request);
         request.RejectRequest();
         await _requestRepository.SaveRequestChanges();
         // A new RequestDecisions need to be created with request and HR details along with Decision
@@ -145,5 +162,17 @@ public class RequestService : IReimbursmentRequestService
             EmpId = entityRequest.EmployeeId,
             EmployeeName = entityRequest.Employee?.Name
         };
+    }
+
+    private static void ValidateId(Guid id, string name)
+    {
+        if (id == Guid.Empty)
+            throw new BadRequestException($"{name} is required.");
+    }
+
+    private static void EnsureUnderReview(ReimbursementRequest request)
+    {
+        if (request.RequestStatus != EnumRequestStatus.UNDER_REVIEW)
+            throw new ConflictException("Only requests under review can be approved or rejected.");
     }
 }

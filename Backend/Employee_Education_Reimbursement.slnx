@@ -5,4 +5,7 @@
     <Project Path="src/EmployeeBenefitsWorkflow.Domain/EmployeeBenefitsWorkflow.Domain.csproj" />
     <Project Path="src/EmployeeBenefitsWorkflow.Infrastructure/EmployeeBenefitsWorkflow.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/EmployeeBenefitsWorkflow.Tests/EmployeeBenefitsWorkflow.Tests.csproj" />
+  </Folder>
 </Solution>

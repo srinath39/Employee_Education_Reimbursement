@@ -12,7 +12,7 @@ public interface IRequestRepository
 
     public Task<List<ReimbursementRequest>> GetAllRequestByEmployeeId(Guid empId);
 
-    public Task<ReimbursementRequest> GetRequestByRequestId(Guid requestId);
+    public Task<ReimbursementRequest?> GetRequestByRequestId(Guid requestId);
 
     public Task<List<ReimbursementRequest>> GetAllRequestByRequestStatus(EnumRequestStatus status);
 
